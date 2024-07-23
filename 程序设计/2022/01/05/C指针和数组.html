@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/all.min.css">
+  <script src="/assets/js/main.js"></script><link rel="stylesheet" href="/assets/css/monokai.css">
+<script src="/assets/js/highlight.min.js"></script>
+<script>
+  hljs.highlightAll({ignoreUnescapedHTML: true});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  // Init highlight js
+  document.addEventListener('DOMContentLoaded', function (event) {
+    var els = document.querySelectorAll('pre code')
+
+    function addLangData(block) {
+      var outer = block.parentElement.parentElement.parentElement;
+      var lang = block.getAttribute('data-lang');
+      for (var i = 0; i < outer.classList.length; i++) {
+        var cls = outer.classList[i];
+        if (cls.startsWith('language-')) {
+          lang = cls;
+          break;
+        }
+      }
+      if (!lang) {
+        cls = block.getAttribute('class');
+        lang = cls ? cls.replace('hljs ', '') : '';
+      }
+      if (lang.startsWith('language-')) {
+        lang = lang.substr(9);
+      }
+      block.setAttribute('class', 'hljs ' + lang);
+      block.parentNode.setAttribute('data-lang', lang);
+    }
+
+    function addBadge(block) {
+      var enabled = ('true' || 'true').toLowerCase();
+      if (enabled == 'true') {
+        var pre = block.parentElement;
+        pre.classList.add('badge');
+      }
+    }
+
+    function handle(block) {
+      addLangData(block);
+      addBadge(block)
+      //hljs.highlightBlock(block);
+      // hljs.highlightElement(block);
+    }
+
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      handle(el);
+    }
+  });
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+
+    text-transform: capitalize;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code>table pre::before {
+    display: none;
+  }
+</style></head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner"><span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="老白的教学博客" src="/assets/images/bzlog.png" onerror="this.style.display='none'">
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewBox="0 0 18 15" width="1.125rem" height="1rem">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger"><a class="page-link" href="/">
+                <i class="fas fa-home"></i>
+                首页
+              </a><a class="page-link" href="/categories.html">
+                <i class="fas fa-list"></i>
+                分类
+              </a><a class="page-link" href="/tags.html">
+                <i class="fas fa-tags"></i>
+                标签
+              </a><a class="page-link" href="/about.html">
+                <i class="fas fa-comment"></i>
+                关于
+              </a></div>
+        </nav></div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">C指针和数组</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-05T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 05, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 15 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/tags.html#C/C++">#C/C++</a><a class="post-tag" href="/tags.html#指针">#指针</a><a class="post-tag" href="/tags.html#数组">#数组</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="一指针的运算">一、指针的运算</h2>
+
+<h3 id="1-指针的算术运算">1) 指针的算术运算</h3>
+<p>指针可以和整数进行一些算术运算。</p>
+<ol>
+  <li>
+    <p><strong>指针 +/- 整数</strong></p>
+
+    <p>以加法为例。如果有基类型为<code>T</code>的指针：</p>
+    <pre><code class="language-C"> T a, *p = &amp;a; 
+</code></pre>
+    <p>给定整数<code>n</code>，则运算<code>p + n</code>的结果是一个新的指针值，其值等于：</p>
+    <pre><code class="language-C"> address(a) + sizeof(T) * n
+</code></pre>
+    <p>而不是：</p>
+    <pre><code class="language-C"> address(a) + 1
+</code></pre>
+    <blockquote>
+      <p>你可能已经注意到，这个新地址是未知单元的地址，也许不能访问！</p>
+    </blockquote>
+  </li>
+  <li>
+    <p><strong>指针 - 指针</strong></p>
+
+    <p>两个指针的减法是有意义的，能得到一个整数值，表示两个指针之间的距离（以单元而不是字节计）。例如：</p>
+    <pre><code class="language-C"> int a[10], *p = &amp;a[2], *q = &amp;a[5];
+ int b = q - p; //b的值是3，而不是12
+</code></pre>
+  </li>
+  <li>
+    <p><strong>两个指针的加法、乘法和除法是无意义的</strong></p>
+
+    <p>例如，如果有指针<code>p</code>、<code>q</code>，那么以下求这两个指针的中间地址的方法是错误的：</p>
+    <pre><code class="language-C"> int a[10], *p = &amp;a[0], *q = &amp;a[9];
+ int *t = (p + q) / 2; //error!
+</code></pre>
+    <p>正确的方法应该是：</p>
+    <pre><code class="language-C"> int *t = p + (q - p) / 2; //OK
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="2-指针的条件运算">2) 指针的条件运算</h3>
+<p>两个指针可以进行条件运算。例如：</p>
+<ul>
+  <li><code>p &gt; q</code>：比较地址p是否大于地址q，即p指向的单元在内存中是否在q指向的单元之后。</li>
+  <li><code>p == q</code>：比较两个地址是否相等，即两个指针是否指向了同一个单元。</li>
+</ul>
+
+<p>在程序代码中，我们常进行指针是否为空的判断。例如：</p>
+<pre><code class="language-C">if (p != NULL) ...
+</code></pre>
+<p>这条<code>if</code>语句可以简写为：</p>
+<pre><code class="language-C">if (p) ...
+</code></pre>
+<p>上述两条语句中的<strong>条件表达式</strong>是<strong>等效</strong>的。
+虽然是等效的，但两个条件表达式的<strong>值</strong>却是不一样的。假设<code>p</code>的值是10000，那么，表达式<code>p != NULL</code>的值是 <strong>1</strong>，而元表达式<code>p</code>的值是 <strong>10000</strong>。
+之所以等效，是因为C语言对逻辑结果简单粗暴的处理方式：<strong>0即假，非0即真</strong>。</p>
+
+<h2 id="二-指针指向数组元素">二、 指针指向数组元素</h2>
+
+<h3 id="1-指向数组元素的指针">1) 指向数组元素的指针</h3>
+<p>如果有：</p>
+<pre><code class="language-C">int a[10];
+int *p;
+p = &amp;a[0];
+</code></pre>
+<p>那么我们说，指针<code>p</code>指向了数组<code>a</code>的<strong>元素</strong>；指针<code>p</code>是<strong>指向数组元素的指针</strong>。
+利用数组连续存储的特性，我们可以通过对指针的加减法使其指向数组的其他元素。例如：</p>
+<pre><code class="language-C">++p; //p现在指向a[1]
+</code></pre>
+
+<blockquote>
+  <p>上述关系的一种常见说法是：指针p指向了数组a。这也许是一种约定俗成的简略语，但实际上是不确切的。指向数组的指针定义完全不同。详见下文。</p>
+</blockquote>
+
+<h3 id="2-和运算符的组合">2) *和++运算符的组合</h3>
+<p>如果有表达式<code>++*p</code>和<code>*p++</code>，并将其值赋给变量<code>a</code>，那么：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">赋值语句</th>
+      <th style="text-align: left">等价形式</th>
+      <th style="text-align: left">分解形式</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">int a = ++*p;</td>
+      <td style="text-align: left">a = ++(*p);</td>
+      <td style="text-align: left">/</td>
+      <td style="text-align: left">自增p指向的单元</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">int a = *p++;</td>
+      <td style="text-align: left">a = *(p++);</td>
+      <td style="text-align: left">int *tmp = p++; a = *tmp;</td>
+      <td style="text-align: left">先后缀自增p的值。后缀自加表达式的结果为自加前的值</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>后缀自增运算符++的优先级高于间接寻址运算符*的。</p>
+</blockquote>
+
+<h2 id="三数组名和指针的关系">三、数组名和指针的关系</h2>
+<p>C数组实际上是一块有起始地址但没有结尾标记的内存块。基于此，C认为数组的名字就表示了数组的起始地址（指针）。例如有：</p>
+<pre><code class="language-C">int a[10];
+</code></pre>
+<p>这里，数组名<code>a</code>被视为是一个常量指针，其值恒等于<code>&amp;a[0]</code>。那么，以下操作就是合情合理的：</p>
+<pre><code class="language-C">*a = 7; //将7赋给a的0号单元
+*(a+1) = 12; //a+1是1号单元的地址
+</code></pre>
+<p>既然如此，那么指针和数组就有着非常密切的关系。如果有：</p>
+<pre><code class="language-C">int a[10], *p = a; //等价于 p = &amp;a[0]，因为a代表了a[0]的地址
+</code></pre>
+<p>那么有如下等价关系成立：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">表达式</th>
+      <th style="text-align: left">等价表达式1</th>
+      <th style="text-align: left">等价表达式2</th>
+      <th style="text-align: left">等价表达式3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">p</td>
+      <td style="text-align: left">a</td>
+      <td style="text-align: left">&amp;a[0]</td>
+      <td style="text-align: left">/</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">*p</td>
+      <td style="text-align: left">*a</td>
+      <td style="text-align: left">a[0]</td>
+      <td style="text-align: left">/</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">p[i]</td>
+      <td style="text-align: left">a[i]</td>
+      <td style="text-align: left">/</td>
+      <td style="text-align: left">/</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">p + i</td>
+      <td style="text-align: left">a + i</td>
+      <td style="text-align: left">i + p</td>
+      <td style="text-align: left">i + a</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">*(p + i)</td>
+      <td style="text-align: left">*(a + i)</td>
+      <td style="text-align: left">*(i + a)</td>
+      <td style="text-align: left">a[i]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>实际上，C编译在处理数组时，都将其转为换指针形式。
+一个有趣又奇怪的事实是，既然<code>*(a+i)</code>可以写成<code>a[i]</code>，那么<code>*(i+a)</code>就可以写成<code>i[a]</code>，也就是说，<code>a[i]</code>和<code>i[a]</code>是等价的！</p>
+
+<p>示例程序：</p>
+<pre><code class="language-C">/*
+ * 指向数组元素的指针
+ */
+
+#include &lt;stdio.h&gt;
+
+#define N   5
+
+int main() {
+    int a[N] = {1, 2, 3, 4, 5};
+    int *p, *t;
+
+    //利用指向数组元素的指针遍历数组
+    //注意：a[N]这个单元不存在！
+    //但其地址总是可以获取的，并且在代码中只用到了这个地址，而没有访问这个地址上的单元，因此是安全的
+    for (t = p = &amp;a[0]; p != &amp;a[N]; ++p)
+        printf("%4d", *p);
+
+    printf("\np - t = %ld\n", p - t);
+
+    return 0;
+}
+</code></pre>
+<p>相信大家已经注意到了，程序中用<code>a[N]</code>的地址。我们知道，数组<code>a</code>的最大合法下标应该是<code>N-1</code>，那么为什么程序中可以这样用呢？
+答案很简单：因为代码只是用了<code>a[N]</code>这个虚拟元素的地址，而没有访问这个地址下的单元，所以代码是安全的。在某些场合，<code>&amp;a[N]</code>被称为<strong>哨兵(sentinal)</strong>，标记数组的结尾。</p>
+
+<p>此程序中的循环语句还可以写成：</p>
+<pre><code class="language-C">for (t = p = a; p != a + N; ++p)
+</code></pre>
+
+<h2 id="四指向一维数组的指针">四、指向一维数组的指针</h2>
+
+<p>如果有：</p>
+<pre><code class="language-C">int a[10], *p = a;
+</code></pre>
+<p>那么，<code>p</code>的类型是 <code>int*</code>，其基类型是<code>int</code>；<code>p</code>是<strong>指向数组元素的指针</strong>。</p>
+<blockquote>
+  <p>在p“眼中”，它指向的是单个整数单元；它并不“知道”数组有多长。</p>
+</blockquote>
+
+<p>表达式<code>++p</code>将使<code>p</code>跳过一个<code>int</code>单元。</p>
+
+<p>如果将一维数组作为整体看待，并且用一个指针指向，那么这个指针就是<strong>指向数组的指针</strong></p>
+<ol>
+  <li>
+    <p>数组的类型</p>
+
+    <p>如果有：<code>int a[10];</code> 那么<code>a</code>的类型是：
+ <strong>int [10]</strong>
+ 如果指针<code>p</code>是一个指向数组（整体）的指针，那么它的基类型就应该这个。</p>
+  </li>
+  <li>
+    <p>指向数组的指针</p>
+
+    <p>指向数组的指针的定义为：</p>
+    <pre><code class="language-C"> int (*p)[10];
+</code></pre>
+    <p>上述类型的解读是：</p>
+    <ul>
+      <li>定义中的新符号是<code>p</code></li>
+      <li>()迫使<code>p</code>先与<code>*</code>先结合，因此<code>p</code>一定是个指针</li>
+      <li>剩下的<code>int[10]</code>就是<code>p</code>的基类型。很明显，这是一个一维数组类型</li>
+    </ul>
+
+    <p>综上，指针<code>p</code>指向了一个长度为10的一维整型数组。</p>
+  </li>
+  <li>
+    <p><code>p</code>的初始化。</p>
+
+    <p>对比定义：</p>
+    <pre><code class="language-C"> int  a  [10];
+ int (*p)[10];
+</code></pre>
+    <p>如果要使<code>p</code>指向<code>a</code>，那么<code>*p</code>和<code>a</code>就是等价的，那么就有：</p>
+    <pre><code class="language-C"> p = &amp;a;
+</code></pre>
+    <p>通过<code>p</code>访问数组元素的形式为：</p>
+    <pre><code class="language-C"> (*p)[i]
+</code></pre>
+  </li>
+</ol>
+
+<p>示例程序：</p>
+<pre><code class="language-C">/*
+ * 指向一维数组的指针
+ */
+
+#include &lt;stdio.h&gt;
+
+#define N   5
+
+int main() {
+    int a[N] = {1, 2, 3, 4, 5};
+    int (*p)[N] = &amp;a;
+
+    int i;
+    for (i = 0; i &lt; N; ++i)
+        printf("%4d", (*p)[i]);
+    putchar('\n');
+
+    return 0;
+}
+</code></pre>
+
+<h2 id="五指针和多维数组">五、指针和多维数组</h2>
+<p>这里仅以二维数组为例。</p>
+<ol>
+  <li>
+    <p>指向二维数组元素的指针</p>
+
+    <pre><code class="language-C"> int a[3][5];
+ int *p;
+ p = &amp;a[0][0];
+ for (int i = 0; i &lt; 3 * 5; ++i, ++p) *p = 1; //将a中的所有元素置为1
+</code></pre>
+  </li>
+  <li>
+    <p>观察二维数组的不同视角</p>
+
+    <p>二维数组<code>int a[3][5]</code>除了可以视为是3X5的<strong>矩阵</strong>外，还可以用以下视角解读：</p>
+    <ul>
+      <li>是一个长度为3的一维数组：<code>a[3]</code>。</li>
+      <li>这个一维数组的基类型是<strong>int[5]</strong>，即<code>a</code>的每个元素（即<code>a</code>的每一行）都是一个长度为5的一维数组。</li>
+    </ul>
+
+    <p>那么：</p>
+    <ul>
+      <li><code>a[i]</code>是<code>a</code>的一行，是个一维数组，那么<code>a[i]</code>就是个<strong>简单指针</strong>，指向了它的0号元素（即<code>a[i][0]</code>）。<code>a[i]</code>等价于<code>&amp;a[i][0]</code>。</li>
+      <li><code>a</code>是个指针（数组名就是指针），它指向了它的0号元素，而这个元素是个<strong>数组</strong>，因此<code>a</code>就是指向数组的指针。<code>a</code>等价于<code>&amp;a[0]</code>。</li>
+    </ul>
+  </li>
+  <li>
+    <p>指针指向二维数组的行</p>
+
+    <pre><code class="language-C"> int a[3][5];
+ int (*p)[5];
+ p = a;
+ ++p; //++操作使p跳过a的一整行而不是一个元素！
+</code></pre>
+  </li>
+</ol>
+
+<p>示例程序：</p>
+<pre><code class="language-C">/*
+ * 指向二维数组的指针
+ */
+
+#include &lt;stdio.h&gt;
+
+#define M   3
+#define N   5
+
+int main() {
+    int a[M][N];
+    int *p; //指针p能指向数组的元素
+    int (*q)[N]; //指针q能指向一个长度为N的一维数组
+    int i, j;
+
+    //初始化二维数组
+    p = &amp;a[0][0]; //p指向二维数组的首行首列元素
+    for (i = 0; i &lt; M * N; ++i, ++p)
+        *p = M * N - i;
+
+    q = a; //q和a都是指向数组的指针，那么p[i]/a[i]是一维数组（名），即是个简单指针
+    for (i = 0; i &lt; M; ++i, ++q) { //++q将使q跳过一个数组（即a的一行）而不是一个整型单元
+        p = *q;  //q是指向一维数组的指针，则q = &amp;a[i]；p是指向数组元素的指针，因此p = *(a[i]) = *q
+        for (j = 0; j &lt; N; ++j)
+            printf("%4d", p[j]);
+        putchar('\n');
+    }
+
+    return 0;
+}
+</code></pre>
+
+<h2 id="六指针数组">六、指针数组</h2>
+<p>顾名思义，是每个元素都是指针的数组：</p>
+<pre><code class="language-C">int * a[10]; //a是一个一维数组；长度为10；每个元素都是整型指针
+</code></pre>
+<p>和<strong>数组指针</strong>的对比：</p>
+<pre><code class="language-C">int (*a)[10]; //a是一个指针，指向一个长度为10的一维整型数组
+</code></pre>
+
+<h2 id="七数组作为参数">七、数组作为参数</h2>
+<p>C将数组参数转换为指针参数。因此，数组参数和指针参数是等价的。</p>
+
+<p>示例程序：</p>
+<pre><code class="language-C">/*
+ * 数组参数与指针参数等价
+ */
+
+#include &lt;stdio.h&gt;
+
+void increase(int *a, int len) {
+// void increase(int a[], int len) {
+    for (int i = 0; i &lt; len; ++i)
+        ++a[i];
+}
+
+void print_r(int *a, int len) {
+// void print_r(int a[], int len) {
+    for (int i = 0; i &lt; len; ++i)
+        printf("%4d", a[i]);
+    putchar('\n');
+}
+
+int main() {
+    int x[] = {3, 7, 2, 8, 1, 9, 6, 4, 5, 0};
+    int len = sizeof(x) / sizeof(int);
+
+    print_r(x, len);
+
+    increase(x, len);
+
+    print_r(x, len);
+
+    return 0;
+}
+</code></pre>
+
+<blockquote>
+  <p>注：数组参数只有第一维的长度是可以省略的。有长度省略的数组类型是一种未完成类型，只能使用在函数的参数类型上。</p>
+</blockquote>
+
+
+    </div>
+
+</article>
+<div class="post-nav"><a class="previous" href="/%E5%8D%9A%E5%AE%A2%E5%88%9B%E4%BD%9C/2022/01/04/%E5%9C%A8gitee%E4%B8%8A%E7%94%A8jekyll%E5%88%9B%E4%BD%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" title="在gitee上用jekyll创作个人博客">在gitee上用jekyll创作个人博客</a><a class="next" href="/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html" title="关于c和c++的类型(1)">关于c和c++的类型(1)</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html" title="关于c和c++的类型(1)">07 使用git管理代码</a></li><li><a class="post-link" href="/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(2).html" title="关于c和c++的类型(1)">关于c和c++的类型(2)</a></li><li><a class="post-link" href="/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(4).html" title="关于c和c++的类型(1)">关于c和c++的类型(4)</a></li><li><a class="post-link" href="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/11/%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AE%89%E8%A3%85Ubuntu-Server.html" title="关于c和c++的类型(1)">在虚拟机中安装ubuntu server</a></li></ul>
+    </div><div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 1rem;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title"><i class="fas fa-anchor"></i>&nbsp;文章导航</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="' + h.tagName.toLowerCase() + '">'
+        + '<a href="#' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          if (!a) return; //BZJ
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><style>
+  .cts a {
+    margin: 0 .75rem ;
+  }
+</style>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/%20/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>
+        <span>
+          2024&nbsp;<span class="copyleft"><i class="far fa-copyright"></i></span>&nbsp;白忠建&nbsp;电子科技大学信息与软件工程学院&nbsp;&nbsp;|&nbsp;&nbsp;
+        </span>
+        <i class="far fa-envelope"></i>&nbsp;baizj@uestc.edu.cn
+      </div>
+      <div class="cts">Powered by <a title="Jekyll is a simple, blog-aware, static site generator" href="http://jekyllrb.com/">Jekyll</a>&nbsp;&nbsp;
+        <br/>
+        Courtesy:&nbsp;<a title="Yat, yet another theme" href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a><a title="The web's most popular icon set and toolkit" href="https://fontawesome.com">Font Awesome</a><a title="Syntax highlighting for the Web" href="https://highlightjs.org/">highlight.js</a></div>
+    </div>
+  </div>
+</footer></body>
+</html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/all.min.css">
+  <script src="/assets/js/main.js"></script><link rel="stylesheet" href="/assets/css/monokai.css">
+<script src="/assets/js/highlight.min.js"></script>
+<script>
+  hljs.highlightAll({ignoreUnescapedHTML: true});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  // Init highlight js
+  document.addEventListener('DOMContentLoaded', function (event) {
+    var els = document.querySelectorAll('pre code')
+
+    function addLangData(block) {
+      var outer = block.parentElement.parentElement.parentElement;
+      var lang = block.getAttribute('data-lang');
+      for (var i = 0; i < outer.classList.length; i++) {
+        var cls = outer.classList[i];
+        if (cls.startsWith('language-')) {
+          lang = cls;
+          break;
+        }
+      }
+      if (!lang) {
+        cls = block.getAttribute('class');
+        lang = cls ? cls.replace('hljs ', '') : '';
+      }
+      if (lang.startsWith('language-')) {
+        lang = lang.substr(9);
+      }
+      block.setAttribute('class', 'hljs ' + lang);
+      block.parentNode.setAttribute('data-lang', lang);
+    }
+
+    function addBadge(block) {
+      var enabled = ('true' || 'true').toLowerCase();
+      if (enabled == 'true') {
+        var pre = block.parentElement;
+        pre.classList.add('badge');
+      }
+    }
+
+    function handle(block) {
+      addLangData(block);
+      addBadge(block)
+      //hljs.highlightBlock(block);
+      // hljs.highlightElement(block);
+    }
+
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      handle(el);
+    }
+  });
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+
+    text-transform: capitalize;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code>table pre::before {
+    display: none;
+  }
+</style></head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner"><span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="老白的教学博客" src="/assets/images/bzlog.png" onerror="this.style.display='none'">
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewBox="0 0 18 15" width="1.125rem" height="1rem">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger"><a class="page-link" href="/">
+                <i class="fas fa-home"></i>
+                首页
+              </a><a class="page-link" href="/categories.html">
+                <i class="fas fa-list"></i>
+                分类
+              </a><a class="page-link" href="/tags.html">
+                <i class="fas fa-tags"></i>
+                标签
+              </a><a class="page-link" href="/about.html">
+                <i class="fas fa-comment"></i>
+                关于
+              </a></div>
+        </nav></div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">05 编译环境和工具</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-01T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 01, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 11 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/tags.html#gcc/g++">#gcc/g++</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="part-1编译器">Part 1、编译器</h2>
+
+<h3 id="一-安装gccg编译器">一、 安装gcc/g++编译器</h3>
+
+<h4 id="一wsl或者虚拟机中的linux">一）WSL或者虚拟机中的Linux</h4>
+
+<p><strong>这里以在Ubuntu中安装<code>gcc/g++</code>版本13为例。这个版本支持最新（但不是全部）的<code>C23/C++23</code>标准。</strong></p>
+
+<blockquote>
+  <p>注意：这要求Ubuntu版本是23.04及以上。如果版本较低，那么请先升级Ubuntu内核至少到23.04。</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>卸载旧版本</p>
+
+    <p>在终端中发出如下命令之一：</p>
+    <pre><code class="language-bash"> gcc -v
+ g++ -v
+</code></pre>
+    <p>如果系统显示命令找不到，那么请直接跳到步骤2)。</p>
+
+    <p>如果显示的主版本号低于<strong>13</strong>（例如是12），那么先卸载它：</p>
+    <pre><code class="language-bash"> sudo apt remove gcc-12 g++-12 -y
+</code></pre>
+  </li>
+  <li>
+    <p>安装最新版</p>
+
+    <p>在终端中发出如下命令：</p>
+    <pre><code class="language-bash"> sudo apt install gcc-13 g++-13 -y
+</code></pre>
+  </li>
+  <li>
+    <p>清除原有默认设置</p>
+
+    <p>如果你是第一次安装<code>gcc/g++</code>，请跳过这一步。</p>
+
+    <p>在终端中发出如下命令：</p>
+    <pre><code class="language-bash"> sudo update-alternatives --remove-all gcc
+ sudo update-alternatives --remove-all g++
+</code></pre>
+    <p>请忽略可能出现的提示信息。</p>
+  </li>
+  <li>将gcc设为默认编译器
+    <ul>
+      <li>方法1：在终端中发出如下命令：
+        <pre><code class="language-bash">  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 20
+  sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 20
+</code></pre>
+      </li>
+      <li>方法2：在终端中发出如下命令：
+        <pre><code class="language-bash">  cd /usr/bin
+  sudo ln -fs gcc-13 gcc
+  sudo ln -fs g++-13 g++
+</code></pre>
+      </li>
+    </ul>
+  </li>
+  <li>验证是否设置成功
+ 在终端中发出如下命令：
+    <pre><code class="language-bash"> gcc -v
+ g++ -v
+</code></pre>
+    <p>如果看到显示的最后一行中，主版本号为13，那么设置就成功了。</p>
+  </li>
+</ol>
+
+<h4 id="二macos">二）macOS</h4>
+<p>一般情况下，macOS自带了<code>clang</code>编译器，并且默认<code>gcc</code>是<code>clang</code>的一个符号链接。</p>
+
+<ol>
+  <li>
+    <p>验证<code>gcc</code>是否存在</p>
+
+    <p>在终端中发出如下命令：</p>
+    <pre><code class="language-bash"> clang -v
+ gcc -v
+ clang++ -v
+ g++ -v
+</code></pre>
+    <p>如果上述四条命令都正确显示了版本号，那么就直接跳到大标题二。</p>
+  </li>
+  <li>
+    <p>如果<code>gcc</code>不存在</p>
+
+    <p>在终端中发出如下命令：</p>
+    <pre><code class="language-bash"> which clang
+</code></pre>
+    <p>可能会显示：<code>/usr/bin/clang</code>。接着发出如下命令：</p>
+    <pre><code class="language-bash"> cd /usr/bin
+ sudo ln -fs clang gcc
+</code></pre>
+    <blockquote>
+      <p>设置g++可以仿照着做。</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="二编辑源程序">二、编辑源程序</h3>
+
+<p>注意：根据你正在学习的语言，你只需要编辑一种语言的程序就行。</p>
+
+<h4 id="一使用c编译器">一）使用C编译器</h4>
+
+<p>打开VS Code，新建并编辑如下文件：</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello!\n");
+    return 0;
+}
+</code></pre>
+
+<p>保存为（二者之一）：</p>
+<ul>
+  <li>WSL：<code>D:\f.c</code>。这个文件在WSL中的路径是：<code>/mnt/d/f.c</code>。</li>
+  <li>虚拟机或者macOS：<code>~/f.c</code>。</li>
+</ul>
+
+<blockquote>
+  <p>注：如果你没有D盘，那么就将其保存到C盘根目录下。</p>
+</blockquote>
+
+<h4 id="二使用c编译器">二）使用C++编译器</h4>
+
+<p>打开VS Code，新建并编辑如下文件：</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; "Hello!" &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>保存为<code>f.cpp</code>，保存路径参照上述C的情况。</p>
+
+<hr />
+
+<h3 id="三测试编译器">三、测试编译器</h3>
+
+<p>注意：根据你正在学习的语言，你只需要用到gcc和g++之一就行了。</p>
+
+<h4 id="一使用c编译器gcc">一）使用C编译器gcc</h4>
+
+<ol>
+  <li>
+    <p>常规使用</p>
+
+    <p>打开终端，在其中发出如下命令来编译链接：</p>
+    <ul>
+      <li>WSL
+        <pre><code class="language-bash">  cd /mnt/d
+  gcc f.c
+</code></pre>
+      </li>
+      <li>虚拟机或macOS
+        <pre><code class="language-bash">  cd ~
+  gcc f.c
+</code></pre>
+        <p>如果没有出现任何信息，那么就表明代码无错，并且生成了可执行文件。</p>
+      </li>
+    </ul>
+
+    <p>这里，我们使用了默认方式生成可执行代码，它在UNIX环境下的名字叫做<code>a.out</code>。如果是在Windows环境下，它的名字是<code>a.exe</code>。</p>
+
+    <p>如果编译器输出了错误信息，那么说明代码有错，且没有生成可执行文件。</p>
+
+    <blockquote>
+      <p>如果你的程序使用了C23标准，那么请用这种方式编译：</p>
+    </blockquote>
+
+    <pre><code class="language-bash"> gcc -std=c2x f.c
+</code></pre>
+
+    <p>接下来，发出如下命令来运行程序：</p>
+    <pre><code class="language-bash"> ./a.out
+</code></pre>
+    <p><strong>注意：命令中输入的是<code>/</code>，不是<code>\</code>。</strong></p>
+
+    <p>此后，你会看到程序的运行输出结果。</p>
+  </li>
+  <li>
+    <p>指定可执行文件的名字</p>
+
+    <p>如果你不想用gcc编译器的默认行为，那么可以在编译时这么做：</p>
+    <pre><code class="language-bash"> gcc f.c -o f
+</code></pre>
+    <p>这条编译命令中<code>-o</code>选项的含义是：生成的可执行代码指定命名为<strong>f</strong>。注意：f文件没有后缀名。</p>
+
+    <p>要运行程序，发出如下命令：</p>
+    <pre><code class="language-bash"> ./f
+</code></pre>
+  </li>
+</ol>
+
+<h4 id="二使用c编译器g">二）使用C++编译器g++</h4>
+
+<p>这里仅以<code>WSL</code>为例。</p>
+
+<p>在终端中发出如下命令来编译链接：</p>
+<pre><code class="language-bash">cd /mnt/d
+g++ f.cpp -std=c++23
+</code></pre>
+
+<blockquote>
+  <p>如果C++编译器版本是11+，那么请将c++23改为c++20；如果低于11，那么请改成c++17。</p>
+</blockquote>
+
+<p>运行程序的步骤请参照前面的“使用C编译器gcc”。</p>
+
+<h4 id="三添加当前目录到搜索路径">三）添加当前目录到搜索路径</h4>
+<p>如果发出如下命令来运行程序：</p>
+<pre><code class="language-bash">a.out
+</code></pre>
+<p>系统可能会提示<code>a.out</code>找不到:</p>
+<pre><code class="language-bash">a.out: command not found
+</code></pre>
+<p>此时，你需要输入的是<code>./a.out</code>。如果你嫌这样每次都要输入<code>./</code>很麻烦，那么可以将当前目录加入到搜索路径中。参考如下步骤进行。</p>
+<ol>
+  <li>启动vim编辑器
+    <pre><code class="language-bash"> vim ~/.profile
+</code></pre>
+    <blockquote>
+      <p>macOS用 .zprofile 替换 .profile。一下仅以.profile为例。</p>
+    </blockquote>
+
+    <p>这条命令启动了<strong>vim</strong>编辑器，打算修改~目录下的.profile。</p>
+  </li>
+  <li>
+    <p>修改.profile</p>
+
+    <p>在<code>vim</code>的编辑界面中，用上下左右键将光标移动到最后一行最后一个字符处，然后按<code>a</code>键，进入添加模式。此后按回车，在新的一行中输入：</p>
+    <pre><code class="language-vim"> export PATH=.:$PATH
+</code></pre>
+    <p>然后按<code>ESC</code>键，再按<code>:</code>键，你可以看到编辑器底部会出现<code>:</code>。在其后面输入<strong>wq</strong>，回车。修改完成。<code>wq</code>的意思<strong>write &amp; quit</strong>。</p>
+
+    <p>接着输入如下命令使设置生效：</p>
+    <pre><code class="language-bash"> source ~/.profile
+</code></pre>
+
+    <blockquote>
+      <p>关于编辑神器vim的使用，请自行查阅相关资料。</p>
+    </blockquote>
+  </li>
+</ol>
+
+<hr />
+<h3 id="四显式链接其他库">四、显式链接其他库</h3>
+<p>在默认情况下，gcc、g++在链接时，可能没有包含一些标准库，例如：数学库、多线程库等。如果需要的话（例如链接器报错），那么必须显式链接。例如：</p>
+<pre><code class="language-bash">gcc f.c –lm
+g++ f.cpp -lpthread
+</code></pre>
+<p>其中，选项-lxxx就是显式链接标准库xxx。</p>
+<blockquote>
+  <p>-lxxx选项必须放在最后。</p>
+</blockquote>
+
+<h2 id="part-2make工具">Part 2、make工具</h2>
+
+<p>如果你的应用由<strong>多个源代码</strong>组成，那么最好使用<strong>make</strong>工具。</p>
+
+<h3 id="一安装make">一、安装make</h3>
+<p>打开一个Linux终端，在其中发出如下命令：</p>
+<pre><code class="language-bash">sudo make -v
+</code></pre>
+<p>如果系统显示版本号，则直接跳到下面的标题二。</p>
+
+<p>发出如下命令来安装<code>make</code>：</p>
+<pre><code class="language-bash">sudo apt install make -y
+</code></pre>
+<blockquote>
+  <p>macOS用 brew 替换apt。以下同此。</p>
+</blockquote>
+
+<h3 id="二make的依赖文件示例">二、make的依赖文件示例</h3>
+<p>使用make工具需要编写一个依赖文件。以下是make工具<strong>默认</strong>依赖文件<strong>Makefile</strong>的样本：</p>
+<pre><code class="language-make">#for C program
+#以下四行是变量定义
+CC = gcc
+cflags = -Wall -g -fsanitize=address
+sources = main.c list.c
+target = list
+
+# 定义一个叫all的任务
+# 这个任务下的命令必须用tab缩进，不能是空格
+all:
+	$(CC) $(cflags) $(sources) -o $(target)
+# 上述命令解释为：启动$(CC)指定的命令，并将后面的一串参数传递给它
+# 这个例子中，命令为：启动gcc编译器，将编译选项传递给它，编译、链接源文件main.c和list.c，生成一个可执行代码list。
+</code></pre>
+
+<pre><code class="language-make">#for C++ program
+CXX = g++
+cxxflags = -Wall -g -fsanitize=address -std=c++23
+sources = main.cpp list.cpp
+target = list
+
+all:
+	$(CXX) $(cxxflags) $(sources) -o $(target)
+</code></pre>
+
+<p>更多的关于make依赖文件的知识，请自行查阅相关资料。</p>
+
+<h3 id="三使用make构建应用">三、使用make构建应用</h3>
+<p>假设程序源代码和Makefile都放在<strong>E:\prog</strong>目录下，那么在Linux终端中，可以发出如下命令来构建：</p>
+<pre><code class="language-bash">cd /mnt/e/prog
+make
+</code></pre>
+<p>如果你不想用默认的文件名Makefile，例如把它命名为<code>list.mk</code>，那么可以这么构建：</p>
+<pre><code class="language-bash">make –f list.mk
+</code></pre>
+
+<h2 id="part-3调试器">Part 3、调试器</h2>
+
+<h3 id="一安装调试器">一、安装调试器</h3>
+
+<h4 id="一wsl或者虚拟机">一）WSL或者虚拟机</h4>
+<p>打开终端，在其中发出如下命令，用来安装<strong>gdb</strong>：</p>
+<pre><code class="language-bash">sudo apt install gdb -y
+</code></pre>
+
+<h4 id="二macos-1">二）macOS</h4>
+<p>打开终端，在其中发出如下命令，用来安装<strong>lldb</strong>：</p>
+<pre><code class="language-bash">sudo brew install lldb -y
+</code></pre>
+
+<h3 id="二使用调试器">二、使用调试器</h3>
+<p>请查阅另一篇博文：为<code>11 为VS Code配置调试</code>，或者自行查阅相关资料。</p>
+
+<hr />
+
+
+    </div>
+
+</article>
+<div class="post-nav"><a class="previous" href="/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/04-%E7%BB%B4%E6%8A%A4%E5%92%8C%E9%85%8D%E7%BD%AELinux.html" title="04 维护和配置linux">04 维护和配置linux</a><a class="next" href="/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="06 配置vs code">06 配置vs code</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/web%E5%BA%94%E7%94%A8/2022/01/13/%E9%85%8D%E7%BD%AEPHP%E5%92%8Cnginx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html" title="06 配置vs code">配置php和nginx开发环境</a></li><li><a class="post-link" href="/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html" title="06 配置vs code">关于c和c++的类型(1)</a></li><li><a class="post-link" href="/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/03-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8Linux.html" title="06 配置vs code">03 在windows中使用linux</a></li><li><a class="post-link" href="/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/10-%E5%9C%A8macOS%E4%B8%AD%E4%BD%BF%E7%94%A8gcc%E5%92%8Cg++.html" title="06 配置vs code">10 在macos中使用gcc和g++</a></li></ul>
+    </div><div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 1rem;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title"><i class="fas fa-anchor"></i>&nbsp;文章导航</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="' + h.tagName.toLowerCase() + '">'
+        + '<a href="#' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          if (!a) return; //BZJ
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><style>
+  .cts a {
+    margin: 0 .75rem ;
+  }
+</style>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/%20/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>
+        <span>
+          2024&nbsp;<span class="copyleft"><i class="far fa-copyright"></i></span>&nbsp;白忠建&nbsp;电子科技大学信息与软件工程学院&nbsp;&nbsp;|&nbsp;&nbsp;
+        </span>
+        <i class="far fa-envelope"></i>&nbsp;baizj@uestc.edu.cn
+      </div>
+      <div class="cts">Powered by <a title="Jekyll is a simple, blog-aware, static site generator" href="http://jekyllrb.com/">Jekyll</a>&nbsp;&nbsp;
+        <br/>
+        Courtesy:&nbsp;<a title="Yat, yet another theme" href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a><a title="The web's most popular icon set and toolkit" href="https://fontawesome.com">Font Awesome</a><a title="Syntax highlighting for the Web" href="https://highlightjs.org/">highlight.js</a></div>
+    </div>
+  </div>
+</footer></body>
+</html>
