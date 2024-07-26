@@ -491,33 +491,172 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">02 关于操作系统和工具软件</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-01T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 01, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 3 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#VSCode">#VSCode</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <h2 id="part-1操作系统">Part 1、操作系统</h2>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
-    <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
-    </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
+<p><strong>强烈建议使用正版、开源软件</strong></p>
+
+<h3 id="一windows">一、Windows</h3>
+
+<p>你的Windows最好升级到最新版。</p>
+
+<p>点击Windows底部工具栏最左边的<strong>开始</strong>按钮（Windows徽标），在菜单中选择<strong>设置</strong>（图标是个齿轮），在弹出的<strong>Windows设置</strong>窗口中，点击<strong>更新和安全</strong>，点击<strong>检查更新</strong>。如果列出了一些更新项目，那么选择它们以更新、升级Windows。更新、升级过程可能会比较长，请按提示操作并耐心等待。另外，需要不定时检查是否有更多的更新。</p>
+
+<h3 id="二macos">二、macOS</h3>
+
+<p>本课程对macOS的版本没有特别要求。如果需要更新，请参阅苹果电脑的手册。</p>
+
+<h3 id="三linux">三、Linux</h3>
+<p>Linux是一种非常棒的、开源的操作系统，软件生态也比较完整。</p>
+
+<p>不过，Linux的命令行界面操作比较复杂，所以不建议初学者直接安装使用独立完整的Linux系统，也不建议在类似于<strong>VMWare</strong>的虚拟机中安装。以后可以根据需要再安装。</p>
+
+<blockquote>
+  <p>但我们会在Windows环境下使用一种轻量级的Linux系统。请阅读后续更多的文档。</p>
+</blockquote>
+
+<h2 id="part-2编程工具">Part 2、编程工具</h2>
+
+<p>如果大家在用自己的电脑编程，那么我强烈推荐使用微软的<strong>Visual Studio Code</strong>（简称<code>Code</code>）。</p>
+
+<h3 id="一安装vs-code">一、安装VS Code</h3>
+
+<p>请从<code>https://code.visualstudio.com/</code>下载安装适合自己操作系统的版本。<code>Code</code>支持所有主流操作系统。</p>
+
+<h3 id="二安装插件">二、安装插件</h3>
+
+<p>启动<code>Code</code>，鼠标左键在左侧边栏中点击下面的图标：</p>
+<div style="text-align:center;">
+<img src="/blog/assets/images/blog/plug-in-icon.png" style="width:50%;" />
 </div>
 
+<p>将展开一个输入框中，局部类似于：</p>
+<div style="text-align:center;">
+<img src="/blog/assets/images/blog/search-plugin.png" style="height:40%;" />
+</div>
+
+<p>在框中输入插件的前几个字母，就可以在下面列表中看到很多相关插件。点击选中的插件即可安装。
+建议安装如下插件：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>插件名</th>
+      <th>发布者</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>C/C++ IntelliSense</td>
+      <td>Microsoft</td>
+      <td>语法检查和提示</td>
+    </tr>
+    <tr>
+      <td>vscode-icons</td>
+      <td>VSCode Icon Team</td>
+      <td>漂亮的文件类型图标</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>更多的关于如何配置和使用Code的描述，请阅读后续更多的文档。</p>
+</blockquote>
+
+<blockquote>
+  <p>从根上来看，Code只是一种源代码编辑工具，并不能编译、链接和运行程序。因此，你还需要安装、配置编译环境。请阅读后续文档。</p>
+</blockquote>
+
+<blockquote>
+  <p>对于使用macOS的同学，除了可以使用微软的Code之外，还可以使用苹果开发的XCode。不过，这个软件体积巨大，下载安装可能要花一些时间。有些同学也会使用Visual Studio。这也是一种重量级编程工具，可以使用，但操作有些繁琐。因此，我不建议初学者使用，后期有必要时才使用它。</p>
+</blockquote>
+
+<h3 id="part-3后续阅读">Part 3、后续阅读</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>操作系统</th>
+      <th>编译器</th>
+      <th>后续需要阅读的文章（开头编号）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Linux/WSL</td>
+      <td>gcc/g++</td>
+      <td>03~08</td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>MinGW gcc/g++</td>
+      <td>09</td>
+    </tr>
+    <tr>
+      <td>macOS</td>
+      <td>gcc/g++</td>
+      <td>0A</td>
+    </tr>
+  </tbody>
+</table>
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/01-%E5%89%8D%E8%A8%80.html" title="01 前言">01 前言</a><a class="next" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/03-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8Linux.html" title="03 在windows中使用linux">03 在windows中使用linux</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(2).html" title="03 在windows中使用linux">关于c和c++的类型(2)</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html" title="03 在windows中使用linux">关于c和c++的类型(1)</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/02-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6.html" title="03 在windows中使用linux">02 关于操作系统和工具软件</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/11/%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AE%89%E8%A3%85Ubuntu-Server.html" title="03 在windows中使用linux">在虚拟机中安装ubuntu server</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

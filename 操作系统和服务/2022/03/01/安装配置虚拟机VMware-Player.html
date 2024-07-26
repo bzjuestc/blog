@@ -491,33 +491,207 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">安装配置虚拟机vmware player</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-03-01T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Mar 01, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 6 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#虚拟机">#虚拟机</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <p>有同学因为课程要求，需要在<code>Windows</code>中安装<code>VMware</code>虚拟机，过程中遇到了一些问题。
+这里分享一下我的安装配置经验。</p>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
+<h2 id="一-安装vmware-player">一、 安装VMware Player</h2>
+
+<ol>
+  <li>
+    <p>安装前的准备</p>
+
+    <p>如果你的<code>Windows</code>启用了<code>WSL</code>，那么请将其升级到<code>WSL2</code>。</p>
+  </li>
+  <li>
+    <p>下载安装</p>
+
+    <p>从官网下载<code>VMware Player 16</code>的合适版本并安装。</p>
+
+    <p>安装过程中，请勾选<strong>安装 Windows Hyper-V Platform(WHP)</strong>，这可以保证<code>WSL</code>和<code>Player</code>可以共存。</p>
+
+    <p>安装完成后<code>Windows</code>会重启以使设置生效。第一次启动<code>Player</code>时，可能会提示有更新，请选择更新。</p>
+
+    <blockquote>
+      <p>Player用于非商业用途是免费的，不需要许可证。</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="二-安装ubuntu">二、 安装Ubuntu</h2>
+
+<p>这里以安装<code>Ubuntu</code>为例。</p>
+
+<ol>
+  <li>
+    <p>下载镜像</p>
+
+    <p>1). 从清华大学<code>https://mirror.tuna.tsinghua.edu.cn/ubuntu-releases</code>网站，下载<code>Ubuntu XXX</code>桌面版镜像（<code>ubuntu-XXX-desktop-amd64.iso</code>），把它存放到（例如）<code>D:\iso</code>目录中。</p>
+    <blockquote>
+      <p>注：XXX是Ubuntu的版本号。建议选择最高版本。</p>
+    </blockquote>
+
+    <p>2). 打开<code>https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/</code>页面，选择版本 XXX，将选项下面文本框中的<code>sources.list</code>样本复制下来，然后在<code>Windows</code>中打开<code>Notepad</code>，将内容粘贴到其中，并保存为<code>D:\iso\sources.list</code>。</p>
+    <blockquote>
+      <p>这个文件的作用是，系统的更新源指向清华tuna镜像站点，这可以使更新下载更快。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>安装Ubuntu</p>
+
+    <p>打开<code>Player</code>，在<strong>主页</strong>中选择<strong>创建虚拟机</strong>。</p>
+
+    <p>1). 在弹出的窗口中，选择<strong>安装程序光盘映像文件(iso)</strong>，按<strong>浏览</strong>，找到<code>D:\iso\ubuntu-XXX-desktop-amd64.iso</code>，选择<strong>打开</strong>。</p>
+
+    <p>2). 此后的页面就是一系列设置过程。请根据实际情况填写相关内容。</p>
+    <blockquote>
+      <p>强烈建议不要安装到C:盘</p>
+    </blockquote>
+
+    <p>3). 此后就是<code>Ubuntu</code>的安装过程。请根据实际情况设置相关内容。</p>
+  </li>
+</ol>
+
+<h2 id="三-配置player">三、 配置Player</h2>
+
+<ol>
+  <li>
+    <p>软件更新</p>
+
+    <p>点击<code>Player</code>左上角的<strong>Player</strong>旁的向下箭头，选择<strong>文件</strong>-&gt;<strong>首选项</strong>，在弹出的窗口中勾选<strong>软件更新</strong>中的两项。</p>
+  </li>
+  <li>
+    <p>VMware Tools</p>
+
+    <p>选中已安装的镜像，然后点击<code>Player</code>左上角的<strong>Player</strong>旁的向下箭头，选择<strong>管理</strong>-&gt;<strong>虚拟机设置</strong>，在弹出的窗口中上方，选择<strong>选项</strong>卡，点击<strong>VMware Tools</strong>，勾选<strong>时间同步</strong>和<strong>自动更新</strong>两项。</p>
+  </li>
+</ol>
+
+<h2 id="四-配置ubuntu">四、 配置Ubuntu</h2>
+
+<ol>
+  <li>
+    <p>选中已安装的镜像并启动它。</p>
+  </li>
+  <li>安装<code>open-vm-tools</code>
+ 打开终端，发出如下命令：
+    <pre><code class="language-bash"> sudo apt install open-vm-tools open-vm-tools-desktop
+</code></pre>
+    <p>如果顺利安装，那么主机系统和虚拟机之间可以实现文件的复制、粘贴和拖放。
+ 此后可以跳过<strong>第3步</strong>。</p>
+  </li>
+  <li>
+    <p>安装/更新<code>VMware Tools</code></p>
+
+    <p>如果你的虚拟机不能成功安装<code>open-vm-tools</code>，那么需手动安装<code>VMware Tools</code>。</p>
+
+    <p>在<code>Player</code>界面的左上角点击一下，展开<strong>管理</strong>菜单。如果<strong>安装/更新VMware Tools</strong>或者<strong>重新安装VMware Tools</strong>可以用（不能用时是灰色的），那么点击它。此后<code>Ubuntu</code>左侧栏会出现一个光盘图标。然后按如下步骤安装：</p>
+
     <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
+      <li>查看光盘设备是否挂载
+        <pre><code class="language-bash">  mount | grep cdrom
+</code></pre>
+        <p>如果显示已经挂载，则跳到<strong>解压</strong>步骤；如果没有，则发出如下指令：</p>
+        <pre><code class="language-bash">  cd /mnt
+  sudo mkdir -p cdrom
+  sudo mount /dev/cdrom /mnt/cdrom
+</code></pre>
+      </li>
+      <li>解压<code>VMware Tools</code>tar包
+        <pre><code class="language-bash">  cd /tmp
+  tar zxpf /mnt/cdrom/VMwareTools-x.x.x-yyyy.tar.gz
+</code></pre>
+        <blockquote>
+          <p>x、y等是实际的版本号，请根据实际情况替换。但你不必敲完tar包的名字，只需键入前几个字母，然后按tab键，系统会自动补全。</p>
+        </blockquote>
+      </li>
+      <li>卸载光盘设备
+        <pre><code class="language-bash">  umount /dev/cdrom 
+</code></pre>
+      </li>
+      <li>安装
+        <pre><code class="language-bash">  cd vmware-tools-distrib
+  sudo ./vmware-install.pl
+</code></pre>
+        <p>如果适合你的配置，请按照提示接受默认值。
+  按照脚本结尾处的说明进行操作。</p>
+      </li>
     </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+  </li>
+  <li>
+    <p>配置更新源</p>
 
+    <p>1). 在<code>Ubuntu</code>桌面上打开<code>Home</code>文件夹， 再打开<code>Downloads</code>文件夹。将<code>D:\iso\sources.list</code>复制粘贴到里面。</p>
+
+    <p>2). 打开终端，发出如下一系列命令：</p>
+    <pre><code class="language-bash"> cd /etc/apt
+ sudo mv sources.list sources.list.bak
+ sudo mv ~/Downloads/source.list .
+ sudo apt update
+ sudo apt dist-upgrade -y
+ sudo apt autoremove
+</code></pre>
+  </li>
+</ol>
+
+<hr />
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/25/%E4%BF%AE%E6%94%B9WSL%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%B4%A6%E6%88%B7.html" title="修改wsl启动时的默认账户">修改wsl启动时的默认账户</a><a class="next" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/06/VS-Code%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA.html" title="Vs code连接虚拟机">Vs code连接虚拟机</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="Vs code连接虚拟机">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/05-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7.html" title="Vs code连接虚拟机">05 编译环境和工具</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/08-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" title="Vs code连接虚拟机">08 常见问题及解决方案</a></li><li><a class="post-link" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/13/%E9%85%8D%E7%BD%AEPHP%E5%92%8Cnginx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html" title="Vs code连接虚拟机">配置php和nginx开发环境</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

@@ -1,4 +1,906 @@
----
-layout: categories
-title: 分类
----
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="/blog/assets/css/main.css">
+  <link rel="stylesheet" href="/blog/assets/css/all.min.css">
+  <script src="/blog/assets/js/main.js"></script><link rel="stylesheet" href="/blog/assets/css/monokai.css">
+<script src="/blog/assets/js/highlight.min.js"></script>
+<script>
+  hljs.highlightAll({ignoreUnescapedHTML: true});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  // Init highlight js
+  document.addEventListener('DOMContentLoaded', function (event) {
+    var els = document.querySelectorAll('pre code')
+
+    function addLangData(block) {
+      var outer = block.parentElement.parentElement.parentElement;
+      var lang = block.getAttribute('data-lang');
+      for (var i = 0; i < outer.classList.length; i++) {
+        var cls = outer.classList[i];
+        if (cls.startsWith('language-')) {
+          lang = cls;
+          break;
+        }
+      }
+      if (!lang) {
+        cls = block.getAttribute('class');
+        lang = cls ? cls.replace('hljs ', '') : '';
+      }
+      if (lang.startsWith('language-')) {
+        lang = lang.substr(9);
+      }
+      block.setAttribute('class', 'hljs ' + lang);
+      block.parentNode.setAttribute('data-lang', lang);
+    }
+
+    function addBadge(block) {
+      var enabled = ('true' || 'true').toLowerCase();
+      if (enabled == 'true') {
+        var pre = block.parentElement;
+        pre.classList.add('badge');
+      }
+    }
+
+    function handle(block) {
+      addLangData(block);
+      addBadge(block)
+      //hljs.highlightBlock(block);
+      // hljs.highlightElement(block);
+    }
+
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      handle(el);
+    }
+  });
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+
+    text-transform: capitalize;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code>table pre::before {
+    display: none;
+  }
+</style></head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner"><span class="site-brand"><a class="site-brand-inner" rel="author" href="/blog/">
+  <img class="site-favicon" title="老白的教学博客" src="/blog/assets/images/bzlog.png" onerror="this.style.display='none'">
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewBox="0 0 18 15" width="1.125rem" height="1rem">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger"><a class="page-link" href="/blog/">
+                <i class="fas fa-home"></i>
+                首页
+              </a><a class="page-link" href="/blog/categories.html">
+                <i class="fas fa-list"></i>
+                分类
+              </a><a class="page-link" href="/blog/tags.html">
+                <i class="fas fa-tags"></i>
+                标签
+              </a><a class="page-link" href="/blog/about.html">
+                <i class="fas fa-comment"></i>
+                关于
+              </a></div>
+        </nav></div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <div class="page-segments">
+  <ul class="page-segments-list">
+    
+    <h2 id="C/C++开发环境" class="segment-name">C/C++开发环境</h2>
+      
+      
+        
+        <li> 
+<span class="post-meta">Mar 10, 2023</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html">
+    11 为vs code配置调试
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Sep 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/10-%E5%9C%A8macOS%E4%B8%AD%E4%BD%BF%E7%94%A8gcc%E5%92%8Cg++.html">
+    10 在macos中使用gcc和g++
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Sep 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/09-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8MinGW%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83.html">
+    09 在windows中使用mingw编译环境
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/08-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html">
+    08 常见问题及解决方案
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html">
+    07 使用git管理代码
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html">
+    06 配置vs code
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/05-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7.html">
+    05 编译环境和工具
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/04-%E7%BB%B4%E6%8A%A4%E5%92%8C%E9%85%8D%E7%BD%AELinux.html">
+    04 维护和配置linux
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/03-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8Linux.html">
+    03 在windows中使用linux
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/02-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6.html">
+    02 关于操作系统和工具软件
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/01-%E5%89%8D%E8%A8%80.html">
+    01 前言
+  </a>
+</span>
+ </li>
+        
+      
+    
+    <h2 id="Web应用" class="segment-name">Web应用</h2>
+      
+      
+        
+        <li> 
+<span class="post-meta">Jan 21, 2022</span>
+<span>
+  <a class="post-link" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/21/%E4%BD%BF%E7%94%A8Grunt%E4%BD%BF%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96.html">
+    使用grunt使应用构建自动化
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 13, 2022</span>
+<span>
+  <a class="post-link" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/13/%E9%85%8D%E7%BD%AEPHP%E5%92%8Cnginx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">
+    配置php和nginx开发环境
+  </a>
+</span>
+ </li>
+        
+      
+    
+    <h2 id="博客创作" class="segment-name">博客创作</h2>
+      
+      
+        
+        <li> 
+<span class="post-meta">Jan 04, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E5%8D%9A%E5%AE%A2%E5%88%9B%E4%BD%9C/2022/01/04/%E5%9C%A8gitee%E4%B8%8A%E7%94%A8jekyll%E5%88%9B%E4%BD%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html">
+    在gitee上用jekyll创作个人博客
+  </a>
+</span>
+ </li>
+        
+      
+    
+    <h2 id="操作系统和服务" class="segment-name">操作系统和服务</h2>
+      
+      
+        
+        <li> 
+<span class="post-meta">Mar 30, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/30/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL%E6%9C%8D%E5%8A%A1.html">
+    在ubuntu中安装mysql服务
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/11/%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AE%89%E8%A3%85Ubuntu-Server.html">
+    在虚拟机中安装ubuntu server
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Mar 06, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/06/VS-Code%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA.html">
+    Vs code连接虚拟机
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Mar 01, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/01/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BAVMware-Player.html">
+    安装配置虚拟机vmware player
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Feb 25, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/25/%E4%BF%AE%E6%94%B9WSL%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%B4%A6%E6%88%B7.html">
+    修改wsl启动时的默认账户
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Feb 23, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html">
+    免密使用sudo
+  </a>
+</span>
+ </li>
+        
+      
+    
+    <h2 id="程序设计" class="segment-name">程序设计</h2>
+      
+      
+        
+        <li> 
+<span class="post-meta">Jan 12, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/12/%E4%BD%BF%E7%94%A8make%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8.html">
+    使用make构建应用
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 06, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(4).html">
+    关于c和c++的类型(4)
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 06, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(3).html">
+    关于c和c++的类型(3)
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 06, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(2).html">
+    关于c和c++的类型(2)
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 06, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html">
+    关于c和c++的类型(1)
+  </a>
+</span>
+ </li>
+        
+      
+        
+        <li> 
+<span class="post-meta">Jan 05, 2022</span>
+<span>
+  <a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/05/C%E6%8C%87%E9%92%88%E5%92%8C%E6%95%B0%E7%BB%84.html">
+    C指针和数组
+  </a>
+</span>
+ </li>
+        
+      
+    
+  </ul>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 1rem;">
+    <!-- Get sidebar items -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="common-list">
+  <ul>
+    <li>
+      <a href="/blog/index.html">
+        所有文章<span>26</span>
+      </a>
+    </li>
+    
+    
+      <li>
+        <a href="/blog/categories.html#C/C++开发环境">
+          C/C++开发环境 <span>11</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/blog/categories.html#Web应用">
+          Web应用 <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/blog/categories.html#博客创作">
+          博客创作 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/blog/categories.html#操作系统和服务">
+          操作系统和服务 <span>6</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/blog/categories.html#程序设计">
+          程序设计 <span>6</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+</section>
+</div>
+
+      </div>
+    </main><style>
+  .cts a {
+    margin: 0 .75rem ;
+  }
+</style>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/blog/%20/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>
+        <span>
+          2024&nbsp;<span class="copyleft"><i class="far fa-copyright"></i></span>&nbsp;白忠建&nbsp;电子科技大学信息与软件工程学院&nbsp;&nbsp;|&nbsp;&nbsp;
+        </span>
+        <i class="far fa-envelope"></i>&nbsp;baizj@uestc.edu.cn
+      </div>
+      <div class="cts">Powered by <a title="Jekyll is a simple, blog-aware, static site generator" href="http://jekyllrb.com/">Jekyll</a>&nbsp;&nbsp;
+        <br/>
+        Courtesy:&nbsp;<a title="Yat, yet another theme" href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a><a title="The web's most popular icon set and toolkit" href="https://fontawesome.com">Font Awesome</a><a title="Syntax highlighting for the Web" href="https://highlightjs.org/">highlight.js</a></div>
+    </div>
+  </div>
+</footer></body>
+</html>

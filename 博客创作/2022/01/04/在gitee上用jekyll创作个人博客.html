@@ -491,33 +491,289 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">在gitee上用jekyll创作个人博客</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-04T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 04, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 7 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#Gitee">#Gitee</a><a class="post-tag" href="/blog/tags.html#jekyll">#jekyll</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <p>本文描述了如何在Gitee平台上，利用Gitee Pages服务开启个人博客的步骤。
+实际上，除了博客外，还可以利用平台建立自己的静态网站。</p>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
+<h2 id="part-1发布平台">Part 1、发布平台</h2>
+<p>发布平台是<strong>码云</strong><code>Gitee</code>。</p>
+
+<h3 id="一申请注册账号">一、申请注册账号</h3>
+<p>在Gitee平台上实名申请注册账号。假设账号名为<strong>abc</strong>。</p>
+
+<h3 id="二配置账户">二、配置账户</h3>
+
+<h4 id="1-本地">1) 本地</h4>
+
+<p>建议在本地的<code>Linux</code>环境中操作。
+打开Linux终端，用<code>ssh-keygen</code>创建公私密钥对。例如：</p>
+<pre><code class="language-bash">ssh-keygen -t rsa
+</code></pre>
+<p>以上命令会在<code>~/.ssh</code>目录下生成秘钥文件<code>id_rsa</code>和公钥文件<code>id_rsa.pub</code>。</p>
+
+<h4 id="2-gitee">2) Gitee</h4>
+
+<ol>
+  <li>进入Gitee网站，登录你的账户。</li>
+  <li>点击右上角的账户图标，选择<strong>设置</strong>，然后在页面的<strong>安全设置</strong>中点击<strong>ssh公钥</strong>。</li>
+  <li>在右侧页面中，为公钥填入一个<strong>标题</strong>。</li>
+  <li>在本地用任何编辑软件打开<code>id_rsa.pub</code>，然后将其中的所有内容复制到Gitee网页的<strong>公钥</strong>框中，然后<strong>确定</strong>。</li>
+</ol>
+
+<p>此后，你将对名下的仓库拥有所有的控制权，包括拉取<strong>pull</strong>和推送<strong>push</strong>权限。</p>
+
+<h3 id="三创建博客仓库">三、创建博客仓库</h3>
+
+<h4 id="1-创建仓库">1) 创建仓库</h4>
+
+<p>在平台上创建一个<strong>公用</strong>仓库。这个仓库的名字最好与账号一样，例如<strong>abc</strong>。</p>
+
+<blockquote>
+  <p>如果不一样，那么博客的网址会有一个子路径，这会使网页中的base路径不是根，需要加上那个额外的子路径。</p>
+</blockquote>
+
+<h4 id="2-仓库设置">2) 仓库设置</h4>
+
+<p>根据你的设计，对仓库进行一些设置。例如：仓库的属性、许可证类型等等。</p>
+
+<h4 id="3-添加初始内容">3) 添加初始内容</h4>
+
+<p>为仓库添加一些初始内容，例如：<strong>README.md</strong>。</p>
+
+<h3 id="四启用gitee-pages服务">四、启用Gitee Pages服务</h3>
+
+<ol>
+  <li>在Gitee页面中点击<code>abc</code>仓库，在<strong>服务</strong>中选择<strong>Gitee Pages</strong>。</li>
+  <li>按照页面的提示要求进行实名认证，等待审批。1个工作日后完成。
+ 一旦审批通过，那么你的博客网址就是：
+ https://abc.gitee.io</li>
+</ol>
+
+<blockquote>
+  <p>此时访问你的博客会失败，因为还没有内容！</p>
+</blockquote>
+
+<h2 id="part-2本地创作环境">Part 2、本地创作环境</h2>
+
+<p>本地创作平台是<code>Linux</code>。</p>
+
+<h3 id="一拉取仓库">一、拉取仓库</h3>
+
+<p>假设你的创作环境是<code>Windows</code>+<code>WSL</code>组合，并准备将远端仓库拉取到<code>D:</code>盘根目录下。</p>
+
+<p>在<code>WSL</code>终端中发出如下命令：</p>
+<pre><code class="language-bash">cd /mnt/d
+git clone git@gitee.com:abc/abc.git
+</code></pre>
+<p>其中，<strong>abc</strong>是你的Gitee账户名。
+此后，可以在<code>D:</code>中看到<code>abc</code>目录。你的博客本地原始稿就存放这个目录下。</p>
+
+<h3 id="二安装ruby">二、安装Ruby</h3>
+
+<p>在终端中发出如下命令：</p>
+<pre><code class="language-bash">sudo apt install ruby-full
+</code></pre>
+
+<h3 id="三安装jekyll">三、安装jekyll</h3>
+
+<p>在终端中发出如下命令：</p>
+<pre><code class="language-bash">sudo gem install jekyll bundler
+</code></pre>
+
+<h3 id="四初始化本地博客仓库">四、初始化本地博客仓库</h3>
+
+<p>有两种方式初始化本地博客仓库。</p>
+
+<h4 id="1-新建">1) 新建</h4>
+<p>在终端中发出如下命令：</p>
+<pre><code class="language-bash">jekyll new abc
+</code></pre>
+<p>此命令会在<code>abc</code>目录下生成一些必要的文件和子目录。</p>
+
+<h4 id="2-使用模板">2) 使用模板</h4>
+
+<ol>
+  <li>从<code>jekyll</code>相关的网站中，下载你心仪的模板。</li>
+  <li>将模板压缩包解压后，将其中的所有文件和目录复制到<code>abc</code>中。</li>
+</ol>
+
+<h2 id="part-3创作博客">Part 3、创作博客</h2>
+
+<h3 id="一准备工作">一、准备工作</h3>
+
+<ol>
+  <li>
+    <p>修改依赖文件 <strong>Gemfile</strong></p>
+
+    <p>根据你的设计，看看需要使用哪些<code>gem</code>插件，然后在<code>abc</code>目录下的<code>Gemfile</code>文件中列出。例如，这是我的博客的<code>Gemfile</code>：</p>
+    <pre><code class="language-ruby"> source "https://rubygems.org"
+
+ gem "kramdown", "~&gt; 2.3.1"
+ gem "kramdown-parser-gfm", "~&gt; 1.1.0"
+</code></pre>
+    <p>这个依赖文件告诉<code>jekyll</code>编译器，需要使用<strong>Markdown</strong>到<strong>HTML</strong>的转换器插件。</p>
+  </li>
+  <li>
+    <p>修改依赖文件 <strong>Gemfile.lock</strong></p>
+
+    <p>在终端中发出如下命令：</p>
+    <pre><code class="language-bash"> bundle update
+</code></pre>
+    <p>此命令将重写<code>Gemfile.lock</code>。</p>
+    <blockquote>
+      <p>强烈建议不要手动修改此文件</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>修改博客全局配置文件 <strong>_config.yml</strong></p>
+
+    <p>这是一个<code>YAML</code>格式的全局配置文件。根据你的设计，编写其中的内容。例如：</p>
+    <pre><code class="language-yaml"> title: 老白的教学博客
+ email: baizj@uestc.edu.cn
+
+ baseurl: ""
+ url: ""
+</code></pre>
+    <p>在此文件中定义的“变量”可以在你的博客脚本中使用。例如：<code>site.title</code>。</p>
+    <blockquote>
+      <p>你可以根据需要随时修改此文件。</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="二创作博客本地稿">二、创作博客本地稿</h3>
+
+<ol>
+  <li>编写布局模板
+ 根据你的设计，编写一系列布局模板（都是<strong>html</strong>文件），并将他们存放到<code>_layouts</code>目录下。
+    <blockquote>
+      <p>布局模板一般采用Liquid语法。请参阅相关文档。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>编写样式文件
+ 请参阅<code>sass</code>的帮助文档编写博客网页的样式，并将他们存放到<code>_sass</code>目录下。</p>
+  </li>
+  <li>编写<strong>index.md</strong>
+ <strong>Pages</strong>服务要求根目录下必须有一个<code>index.html</code>文件。因此你需要按照<code>jekyll</code>标准编写一个<code>index.md</code>文件。它将被<code>jekyll</code>编译转换成<code>index.html</code>。
+    <blockquote>
+      <p>实际上，你编写的Markdown格式的博客文章都会被这样编译转换。</p>
+    </blockquote>
+  </li>
+  <li>编写博客本地稿
+ 请参阅<code>jekyll</code>的帮助文档撰写博客文章，并将他们存放到<code>_posts</code>目录下并按要求命名。
+ 根据<code>jekyll</code>的要求，每一篇博客都需要一个<code>YAML</code>格式的<strong>头信息(Front matter)</strong>。例如：
+    <pre><code class="language-yaml"> ---
+ layout: post
+ categories: 编程环境
+ tags: [Windows, Linux, VSCode, gcc/g++]
+ ---
+</code></pre>
+    <p>其中：</p>
     <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
+      <li><code>---</code>是必须的。</li>
+      <li><code>layout</code>指明这个页面采用<code>post</code>布局。</li>
+      <li><code>categories</code>指明文章内容的分类。如果你的布局有侧边栏，那么分类信息会显示在那里。</li>
+      <li><code>tags</code>指明文章内容涉及的标签。如果你的布局按标签分类，那么标签信息会显示在文章标题附近。</li>
     </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+  </li>
+  <li>编写其他文件</li>
+</ol>
 
+<blockquote>
+  <p>如果你使用的模板，那么可以阅读修改模板提供的模板、样式以及其他文件。</p>
+</blockquote>
+
+<h3 id="三本地预览">三、本地预览</h3>
+
+<ol>
+  <li>启动<code>jekyll</code>本地服务
+ 在终端中发出如下命令：
+    <pre><code class="language-bash"> cd /mnt/d/abc
+ jekyll s --no-watch
+</code></pre>
+    <p>此后，你可以在本地浏览器中，用如下网址访问博客页面：
+ http://localhost:4000</p>
+  </li>
+  <li>编译
+ 如果博客有更新，那么在终端中发出如下命令：
+    <pre><code class="language-bash"> cd /mnt/d/abc
+ jekyll b
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="四发布博客">四、发布博客</h3>
+
+<h4 id="1-推送">1) 推送</h4>
+
+<p>在终端中发出如下命令将本地仓库推送到远端服务器上：</p>
+<pre><code class="language-bash">cd /mnt/d/abc
+git add -A
+git commit -m "your commit-message"
+git push
+</code></pre>
+
+<h4 id="2-发布">2) 发布</h4>
+
+<p>在<strong>Gitee Pages</strong>页面中，选择<strong>更新</strong>。</p>
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/08-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" title="08 常见问题及解决方案">08 常见问题及解决方案</a><a class="next" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/05/C%E6%8C%87%E9%92%88%E5%92%8C%E6%95%B0%E7%BB%84.html" title="C指针和数组">C指针和数组</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html" title="C指针和数组">07 使用git管理代码</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/12/%E4%BD%BF%E7%94%A8make%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8.html" title="C指针和数组">使用make构建应用</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/25/%E4%BF%AE%E6%94%B9WSL%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%B4%A6%E6%88%B7.html" title="C指针和数组">修改wsl启动时的默认账户</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="C指针和数组">11 为vs code配置调试</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

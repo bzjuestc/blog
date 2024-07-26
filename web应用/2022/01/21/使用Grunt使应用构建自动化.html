@@ -491,33 +491,297 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">使用grunt使应用构建自动化</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-21T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 21, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 12 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#nodejs">#nodejs</a><a class="post-tag" href="/blog/tags.html#grunt">#grunt</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <p>当我们在构建Web应用时，往往会做这样的工作：</p>
+<ul>
+  <li>使用<code>less</code>、<code>sass</code>等扩展语言编写样式单，然后编译成<code>css</code>文件。</li>
+  <li>使用<code>cssmin</code>等工具压缩<code>css</code>文件。</li>
+  <li>使用<code>uglifyjs</code>等工具压缩混淆<code>js</code>脚本文件。</li>
+</ul>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
+<p>如果这些工作都是分开做的，那么将会非常繁琐。因此，我们需要一种自动化构建工具，帮助我们构建应用。</p>
+
+<p>目前，自动构建工具有很多，例如：<code>Grunt</code>、<code>Webpack</code>等等。本文仅介绍我熟悉的<code>Grunt</code>。这个工具是用<code>JavaScript</code>编写的。</p>
+
+<h2 id="1-安装nodejs">1. 安装NodeJS</h2>
+<p><code>NodeJS</code>是一款很棒的<code>JavaScript</code>运行平台，它的护航系统（包管理器）是<code>npm</code>。</p>
+<pre><code class="language-bash">sudo apt install nodejs npm -y
+</code></pre>
+<p>安装的包比较多，可能需要一点儿时间。</p>
+
+<h2 id="2-初始化项目">2. 初始化项目</h2>
+<p>假设你将项目放在<code>demosite</code>目录下。</p>
+<pre><code class="language-bash">mkdir demosite
+cd demosite
+npm init -y
+</code></pre>
+<p>上述命令会在<code>demosite</code>目录下创建一个项目依赖配置文件<code>package.json</code>。</p>
+
+<h2 id="3-修改packagejson">3. 修改package.json</h2>
+<p>用<code>Code</code>打开<code>package.json</code>，然后：</p>
+<ul>
+  <li>修改键值。修改以下关键字后的值。
     <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
+      <li>将”description”的值改为你的项目描述</li>
+      <li>将”author”的值改为作者姓名</li>
     </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+  </li>
+  <li>增加键值对。新增如下一条键值对。
+    <pre><code class="language-JSON">  "repository": {}
+</code></pre>
 
+    <blockquote>
+      <p>如果你将项目放到某个托管平台，例如码云Gitee，建议将其中设为你的仓库地址。</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="4-安装grunt">4. 安装Grunt</h2>
+<ol>
+  <li>全局安装<code>Grunt</code>的命令行工具
+    <pre><code class="language-bash"> sudo npm install grunt-cli -g
+</code></pre>
+
+    <blockquote>
+      <p>-g选项说明是全局安装。如果没有指定，那么包将会安装到当前目录的node_modules目录中。</p>
+    </blockquote>
+  </li>
+  <li>安装项目依赖工具包
+    <pre><code class="language-bash"> npm install grunt grunt-contrib-less grunt-contrib-uglify --save-dev
+ npm install grunt-contrib-watch grunt-contrib-cssmin --save-dev
+</code></pre>
+    <p>上述命令会在<code>demosite</code>目录下创建:</p>
+    <ul>
+      <li><code>node_modules</code>目录，其中保存了项目依赖的<code>js</code>包。</li>
+      <li><code>package-lock.json</code>文件</li>
+    </ul>
+
+    <blockquote>
+      <p>选项–save-dev会将依赖写入package.json</p>
+    </blockquote>
+
+    <p>这里解释一下安装的包的功能说明：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: left">包</th>
+          <th style="text-align: left">功能</th>
+          <th style="text-align: left">说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">grunt-cli</td>
+          <td style="text-align: left">grunt的命令行界面</td>
+          <td style="text-align: left">/</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">grunt</td>
+          <td style="text-align: left">grunt主模块</td>
+          <td style="text-align: left">命令格式一般为：grutn task</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">grunt-contrib-less</td>
+          <td style="text-align: left">Less编译器</td>
+          <td style="text-align: left">由grunt启动，将.less文件编译为.css文件</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">grunt-contrib-uglify</td>
+          <td style="text-align: left">JS压缩混淆编译器</td>
+          <td style="text-align: left">由grunt启动，将原始.js文件压缩并“丑化”（混淆变量名）</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">grunt-contrib-watch</td>
+          <td style="text-align: left">监听器</td>
+          <td style="text-align: left">由grunt启动，可监听指定文件的修改，以自动启动编译</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">grunt-contrib-cssmin</td>
+          <td style="text-align: left">CSS压缩器</td>
+          <td style="text-align: left">由grunt启动，将原始.css文件极小化</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p>可以根据项目的需求，安装其他的依赖包。</p>
+    </blockquote>
+  </li>
+  <li>修补包
+ 安装、删除包时，系统可能提示平台有漏洞。可以用如下方式进行修补。
+    <pre><code class="language-bash"> npm audit fix
+</code></pre>
+  </li>
+  <li>
+    <p>删除包</p>
+
+    <p>如果摸个包不需要了，可以这么做：</p>
+    <pre><code class="language-bash"> npm remove &lt;package-name&gt; --save-dev
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="5-创建gruntfilejs文件">5. 创建Gruntfile.js文件</h2>
+<p>打开<code>Code</code>，新建一个文件<code>Gruntfile.js</code>。以下是一个范例。</p>
+<pre><code class="language-js">module.exports = function (grunt) {
+    //const definition
+    const root = 'your project directory'
+    const src_path = `${root}/src`; //原始的.less、.js文件的存放目录
+    const dist_path = `${root}/assets`; //发布的.css、.js文件的存放目录
+
+    const name = 'main'; //.less、.js文件的名字
+
+    const less_src = `${src_path}/${name}.less`;
+    const js_src = `${src_path}/${name}.js`;
+
+    //productive
+    const css_dist = `${dist_path}/css/${name}.css`;
+    const js_dist = `${dist_path}/js/${name}.js`;
+
+    // Project configuration.
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+
+        uglify: { //子任务1。用于压缩、混淆js文件
+            options: {
+                compress: true,
+                mangle: { //混淆选项，排除指定值
+                    reserved: ['$', 'jQuery']
+                }
+            },
+            dist: {
+                files: {
+                    //目标文件  : 原始文件
+                    [js_dist] : js_src
+                }
+            }
+        },
+
+        less: { //子任务2。用于编译.less文件到.css
+            dist: {
+                options: {
+                    strictMath: true
+                },
+                files: {
+                    [css_dist]: less_src
+                }
+            }
+        },
+
+        cssmin: { //子任务3。用于压缩css文件
+            options: {
+                mergeIntoShorthands: false,
+                roundingPrecision: -1
+            },
+            target: {
+                files: {
+                    [css_dist]: css_dist
+                }
+            }
+        },
+
+        watch: { //子任务4。用于监听文件的修改。
+            lessit: { //监听.less文件的修改。
+                files: [`${src_path}/*.less`],
+                tasks: ['css']
+            },
+            jscript: { //监听.js文件的修改。
+                files: [`${src_path}/*.js`],
+                tasks: ['js']
+            }
+        }
+    });
+
+    //载入任务依赖包
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    
+    //注册任务（链）
+    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('css', ['less', 'cssmin']);
+    grunt.registerTask('js', ['uglify:dist']);
+};
+</code></pre>
+
+<h2 id="6-使用grunt">6. 使用Grunt</h2>
+<p>有两种方式使用<code>Grunt</code>。</p>
+<ol>
+  <li>启动默认任务
+    <pre><code class="language-bash"> grunt
+</code></pre>
+    <p>此后，<code>grunt</code>进入监听状态。一旦发现监听的文件有修改，那么对应的任务就会自动启动。</p>
+  </li>
+  <li>
+    <p>执行指定任务</p>
+
+    <p>例如：</p>
+    <pre><code class="language-bash"> grunt css
+</code></pre>
+    <p>此后，<code>grunt</code>将指定指定的任务<code>css</code>。从<code>Gruntfile.js</code>中可以看到，任务<code>css</code>包含了两个子任务：<code>less</code>和<code>cssmin</code>。这两个子任务会依次执行。</p>
+  </li>
+</ol>
+
+<hr />
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/13/%E9%85%8D%E7%BD%AEPHP%E5%92%8Cnginx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html" title="配置php和nginx开发环境">配置php和nginx开发环境</a><a class="next" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="免密使用sudo">免密使用sudo</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(3).html" title="免密使用sudo">关于c和c++的类型(3)</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="免密使用sudo">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html" title="免密使用sudo">关于c和c++的类型(1)</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/06/VS-Code%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA.html" title="免密使用sudo">Vs code连接虚拟机</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

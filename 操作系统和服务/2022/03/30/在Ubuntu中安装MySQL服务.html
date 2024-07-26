@@ -491,33 +491,193 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">在ubuntu中安装mysql服务</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-03-30T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Mar 30, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 6 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#虚拟机">#虚拟机</a><a class="post-tag" href="/blog/tags.html#Ubuntu">#Ubuntu</a><a class="post-tag" href="/blog/tags.html#MySQL">#MySQL</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <h2 id="一安装">一、安装</h2>
+<p>在<code>Ubuntu</code>终端中运行如下命令：</p>
+<pre><code class="language-bash">sudo apt install mysql-server mysql-client libmysqlclient-dev
+</code></pre>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
+<p>如果安装完成后，<code>MySQL</code>服务启动有问题，那么请试试这样做。</p>
+<pre><code class="language-bash">sudo service mysql stop
+cd /var/run
+sudo mkdir -p mysqld
+sudo chown mysql mysqld
+sudo usermod -d /var/lib/mysql/ mysql
+sudo service mysql restart
+</code></pre>
+
+<blockquote>
+  <p>根据我的经验，以上错误最有可能发生在使用WSL中的Ubuntu作为平台时。在Ubuntu Server下，安装过程非常平滑，没有类似问题。</p>
+</blockquote>
+
+<h2 id="二配置">二、配置</h2>
+
+<ol>
+  <li>修改配置
+    <pre><code class="language-bash"> sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+</code></pre>
+    <p>在编辑器中修改如下两项：</p>
+    <pre><code class="language-ini"> bind-address = 0.0.0.0
+ mysqlx-bind-address = 0.0.0.0
+</code></pre>
+  </li>
+  <li>安全设置
+ 运行如下命令：
+    <pre><code class="language-bash"> mysql_secure_installation
+</code></pre>
+    <p>然后系统会提出问题，请你选择：</p>
     <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
+      <li>Q1: VALIDATE…，是否启用严格密码机制，回答<code>n</code>。这样虽然不太安全，它可以是密码没那么复杂。</li>
+      <li>Q2: Password(for root)…，询问是否为<code>root</code>设置密码。回答<code>y</code>。请按提示设置密码。需要输入两次以验证。</li>
+      <li>Q3: Anonymous user…，询问是否删除匿名用户。回答<code>n</code>。</li>
+      <li>Q4: Root from localhost…，询问是否禁止<code>root</code>远程登录。回答<code>y</code>。</li>
+      <li>Q5: test database…，询问是否删除测试数据库<code>test</code>。回答<code>n</code>。</li>
+      <li>Q6: Reload privilege…，询问是否刷新权限表，回答<code>y</code>。</li>
     </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+  </li>
+  <li>重启服务
+    <pre><code class="language-bash"> sudo service mysql restart
+</code></pre>
+  </li>
+</ol>
 
+<h2 id="三数据库操作">三、数据库操作</h2>
+<ol>
+  <li>
+    <p>添加用户</p>
+
+    <p>假设你要添加用户’abc’，并设置密码’123456’。
+ 首先登录<code>mysql</code>。</p>
+    <pre><code class="language-bash"> sudo mysql -u root -p
+</code></pre>
+    <blockquote>
+      <p>住：用root用户登录需要sudo。</p>
+    </blockquote>
+
+    <p>在<code>mysql</code>命令界面中发出如下命令：</p>
+    <pre><code class="language-SQL"> use mysql;
+ create user 'abc'@'%' identified by '123456';
+ grant all on *.* to 'abc'@'%' with grant option;
+ exit
+</code></pre>
+
+    <p>其中的<code>grant</code>命令将在所有用户自建数据库上的所有操作权限赋予了用户’abc’。</p>
+
+    <blockquote>
+      <p>上例中的grant命令给了用户abc极大的权限。在实际应用中，应该根据需要授予合适的权限。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>用户操作</p>
+
+    <p>首先用’abc’用户登录：</p>
+    <pre><code class="language-bash"> mysql -u abc -p
+</code></pre>
+
+    <p>在<code>mysql</code>命令界面中发出如下命令创建数据库：</p>
+    <pre><code class="language-SQL"> create database mydb;
+ use mydb;
+ create table mytable(...);
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="四php设置">四、PHP设置</h2>
+<p>假设使用<code>PDO</code>方式连接数据库。</p>
+
+<ol>
+  <li>安装<code>PHP</code>扩展
+    <pre><code class="language-bash"> sudo apt install php8.1-pdo-mysql php8.1-pdo-odbc
+</code></pre>
+  </li>
+  <li>
+    <p>修改<code>php.ini</code></p>
+
+    <p>打开<code>/etc/php/8.1/fpm/php.ini</code>，然后找到<code>extensions</code>这一节，打开这些扩展的注释（即删掉前面的;）：</p>
+    <ul>
+      <li>mbstring</li>
+      <li>exif</li>
+      <li>pdo-mysql</li>
+      <li>pdo-odbc</li>
+    </ul>
+  </li>
+  <li>重启<code>php8.1-fpm</code>服务
+    <pre><code class="language-bash"> sudo service php8.1-fpm restart
+</code></pre>
+  </li>
+  <li><code>PHP</code>脚本示例
+    <pre><code class="language-PHP"> try {
+     $db = new PDO("mysql:dbname=mydb;host=localhost", 'abc', '123456',
+     [   PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION,        //出错时抛出异常
+         PDO::ATTR_DEFAULT_FETCH_MODE =&gt; PDO::FETCH_ASSOC,   //结果集使用关联数组
+         PDO::ATTR_EMULATE_PREPARES =&gt; true,                 //模拟prepare，防止SQL Injection
+         PDO::ATTR_ORACLE_NULLS =&gt; PDO::NULL_EMPTY_STRING    //原始空串转换为null
+     ]);
+ } catch (PDOException $e) {
+     die( "$e\n");
+ }
+
+ $rows = $db-&gt;query("SELECT * FROM mytable");
+</code></pre>
+  </li>
+</ol>
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/11/%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AE%89%E8%A3%85Ubuntu-Server.html" title="在虚拟机中安装ubuntu server">在虚拟机中安装ubuntu server</a><a class="next" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/09-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8MinGW%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83.html" title="09 在windows中使用mingw编译环境">09 在windows中使用mingw编译环境</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/01/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BAVMware-Player.html" title="09 在windows中使用mingw编译环境">安装配置虚拟机vmware player</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/05-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7.html" title="09 在windows中使用mingw编译环境">05 编译环境和工具</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(4).html" title="09 在windows中使用mingw编译环境">关于c和c++的类型(4)</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html" title="09 在windows中使用mingw编译环境">07 使用git管理代码</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

@@ -491,33 +491,133 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">10 在macos中使用gcc和g++</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-09-01T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Sep 01, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 2 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#macOS">#macOS</a><a class="post-tag" href="/blog/tags.html#gcc/g++">#gcc/g++</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <h2 id="part-1安装homebrew">Part 1、安装Homebrew</h2>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
-    <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
-    </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+<ol>
+  <li>启动一个终端，在其中发出如下命令：
+    <pre><code class="language-bash"> /bin/bash -c "$(curl -fsSL https://gitee.com/ineo6/homebrew-install/raw/master/install.sh)"
+</code></pre>
+  </li>
+  <li>根据命令的提示，将环境变量添加到路径中。
+    <blockquote>
+      <p>安装命令执行时显示的信息有明确的提示和示范，请关注这些信息。</p>
+    </blockquote>
+  </li>
+</ol>
 
+<h2 id="part-2安装gccg">Part 2、安装gcc/g++</h2>
+<p>在终端中执行如下命令：</p>
+<pre><code class="language-bash">brew install gcc g++
+</code></pre>
+<blockquote>
+  <p>brew是macOS的一种包管理器，相当于Linux下的apt。</p>
+</blockquote>
+
+<blockquote>
+  <p>以上方法摘自网络，如有错误，请自行解决。</p>
+</blockquote>
+
+<h2 id="part-3安装vs-code">Part 3、安装VS Code</h2>
+<p>从微软官网下载适合macOS的VS Code版本进行安装。</p>
+
+<h2 id="part-4编译链接运行程序">Part 4、编译链接运行程序</h2>
+<p>假设你将源文件都存放在<code>/usr/local/tmp</code>目录中。即这是你的<strong>工作目录</strong>。</p>
+
+<ol>
+  <li>
+    <p>启动Code，点击左上角的文件图标，在点击<strong>打开文件夹</strong>按钮，选择你的工作目录，然后确定。</p>
+  </li>
+  <li>
+    <p>在弹出的对话框中，勾选“信任xxx文件的作者…”，再点击下方的“是的，我信任作者”按按钮。此后，改文件夹里面的所有文件就会列在Code的左侧栏中。</p>
+  </li>
+  <li>
+    <p>选择一个已有的，或者新建源文件编辑，保存为<code>.c</code>文件。</p>
+  </li>
+  <li>
+    <p>按组合建<strong>CTRL+`</strong>（`键在键盘左上角<code>ESC</code>键的下方），调出Code内嵌的终端。可以看到，终端已自动进入到你的工作文件夹。</p>
+  </li>
+  <li>
+    <p>在终端中发出如下命令编译链接程序：</p>
+    <pre><code class="language-bash"> gcc f.c
+</code></pre>
+    <p>如果无错则会生成可执行文件<code>a.out</code>（这是系统默认的名字）。按如下方法运行这个程序：</p>
+    <pre><code class="language-bash"> ./a.out
+</code></pre>
+
+    <p>如果需要指定生成可执行文件的名字，那么请这么做：
+ 或者</p>
+    <pre><code class="language-bash"> gcc f.c -o myapp
+</code></pre>
+    <p>那么生成的可执行文件的名字就是<code>myapp</code>。按如下方法运行这个程序：</p>
+    <pre><code class="language-bash"> ./myapp
+</code></pre>
+
+    <p>如果你的程序使用了数组、指针等容易出现内存访问错误的机制，那么可以这么做：</p>
+    <pre><code class="language-bash"> gcc f.c -fsanitize=address
+</code></pre>
+    <p>这将启动内存消毒器机制，可以在程序运行时诊断处内存访问错误。根据错误提示可以定位源代码中的逻辑错误。</p>
+  </li>
+</ol>
+
+<hr />
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/09-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8MinGW%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83.html" title="09 在windows中使用mingw编译环境">09 在windows中使用mingw编译环境</a><a class="next" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="11 为vs code配置调试">11 为vs code配置调试</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/04-%E7%BB%B4%E6%8A%A4%E5%92%8C%E9%85%8D%E7%BD%AELinux.html" title="11 为vs code配置调试">04 维护和配置linux</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/05-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7.html" title="11 为vs code配置调试">05 编译环境和工具</a></li><li><a class="post-link" href="/blog/%E5%8D%9A%E5%AE%A2%E5%88%9B%E4%BD%9C/2022/01/04/%E5%9C%A8gitee%E4%B8%8A%E7%94%A8jekyll%E5%88%9B%E4%BD%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" title="11 为vs code配置调试">在gitee上用jekyll创作个人博客</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/05/C%E6%8C%87%E9%92%88%E5%92%8C%E6%95%B0%E7%BB%84.html" title="11 为vs code配置调试">C指针和数组</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

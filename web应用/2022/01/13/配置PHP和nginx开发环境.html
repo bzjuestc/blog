@@ -491,33 +491,241 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">配置php和nginx开发环境</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-13T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 13, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 6 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#PHP">#PHP</a><a class="post-tag" href="/blog/tags.html#nginx">#nginx</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <p>本文示意了在<strong>WSL</strong>中的<code>Ubuntu</code>系统中配置<code>PHP</code>+<code>nginx</code>的开发环境为例。</p>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
-    <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
-    </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+<h2 id="一安装">一、安装</h2>
 
+<h3 id="1-更新ubuntu">1) 更新Ubuntu</h3>
+<pre><code class="language-bash">sudo apt update
+sudo apt upgrade -y
+</code></pre>
+
+<h3 id="2-安装nginx">2) 安装nginx</h3>
+<pre><code class="language-bash">sudo apt install nginx -y
+</code></pre>
+
+<h3 id="3-安装php-81">3) 安装PHP 8.1</h3>
+<pre><code class="language-bash">sudo apt install php8.1 php8.1-fpm php8.1-mbstring -y
+</code></pre>
+
+<blockquote>
+  <p>这里只安装了PHP8.1最必要的一些包。如果需要其他包，请查阅相关资料后安装。</p>
+</blockquote>
+
+<h2 id="二配置nginx">二、配置nginx</h2>
+
+<h3 id="1-修改配置">1) 修改配置</h3>
+<p>在终端中发出下列命令，打开<code>default</code>文件进行编辑。</p>
+<pre><code class="language-bash">cd /etc/nginx/sites-available
+sudo cp default default.bak
+sudo vim default
+</code></pre>
+
+<p><strong>配置要点</strong></p>
+<ol>
+  <li>修改<code>root</code>指令参数，使其指向你的<strong>网站根目录</strong>。</li>
+  <li>添加<code>charset</code>指令，指定字符集为<strong>utf-8</strong>。</li>
+  <li>修改<code>fastcgi_pass</code>指令参数，设置监听端口为你选定的值，例如<strong>9527</strong>。默认值是<strong>9000</strong>。</li>
+</ol>
+
+<p>以下是我的配置文件<code>default</code>，作为参考示例。</p>
+<pre><code class="language-config">server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /mnt/e/demosite; # or the root of your website
+
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name localhost;
+
+        charset 'utf-8';
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass 127.0.0.1:9527;
+        }
+}
+</code></pre>
+
+<blockquote>
+  <p>原来的配置文件有很多#开头的注释。可以在vim中按dd删掉它们：按dd删掉一行，按8dd可以一次删掉8行。</p>
+</blockquote>
+
+<h3 id="2-测试配置">2) 测试配置</h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p>如果提示信息说是成功了，那么就OK了。否则，可根据提示信息修改<code>default</code>。</p>
+
+<h2 id="三配置php">三、配置PHP</h2>
+
+<h3 id="1-配置fastcgi">1) 配置<code>fastcgi</code></h3>
+
+<ol>
+  <li>修改配置
+    <pre><code class="language-bash"> cd /etc/php/8.1/fpm/pool.d
+ sudo cp www.conf www.conf.bak
+ sudo vim www.conf
+</code></pre>
+    <p>找到<code>listen</code>关键字（在第37行左右），用<code>;</code>注释掉原来的，添加一个新行：</p>
+    <pre><code class="language-config"> ;listen = /run/php/php8.1-fpm.sock
+ listen = 9527
+</code></pre>
+
+    <blockquote>
+      <p>在vim中，先按ESC键，然后按:键，输入set number，回车后可以显示行号。</p>
+    </blockquote>
+  </li>
+  <li>测试配置
+    <pre><code class="language-bash"> sudo php-fpm8.1 -t
+</code></pre>
+    <p>如果提示信息说是成功了，那么就OK了。否则，可根据提示信息修改<code>www.conf</code>。</p>
+  </li>
+</ol>
+
+<h3 id="2-配置phpini">2) 配置<code>php.ini</code></h3>
+<p>打开<code>/etc/php/8.1/fpm/php.ini</code>，将其中的一些参数修改为你的设定。</p>
+
+<h2 id="四启动服务">四、启动服务</h2>
+
+<h3 id="1-nginx">1) nginx</h3>
+
+<ol>
+  <li>启动
+    <pre><code class="language-bash"> sudo service nginx start
+</code></pre>
+  </li>
+  <li>停止
+    <pre><code class="language-bash"> sudo service nginx stop
+</code></pre>
+  </li>
+  <li>重启
+    <pre><code class="language-bash"> sudo service nginx restart
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="2-启动php-fastcgi">2) 启动PHP Fastcgi</h3>
+
+<ol>
+  <li>启动
+    <pre><code class="language-bash"> sudo service php8.1-fpm start
+</code></pre>
+
+    <p>如果系统提示：不能创建<code>/run/php/php8.1-fpm.pid</code>，原因可能是<code>/run</code>目录下没有<code>php</code>子目录。这么做：</p>
+    <pre><code class="language-bash"> cd /run
+ sudo mkdir php
+</code></pre>
+    <p>再次启动<code>php-fpm8.1</code>服务应该能解决问题。</p>
+  </li>
+  <li>停止
+    <pre><code class="language-bash"> sudo service php8.1-fpm stop
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="五测试网站">五、测试网站</h2>
+<p>以下测试可以在<strong>Windows</strong>中进行。</p>
+
+<h3 id="1-测试html">1) 测试HTML</h3>
+<ol>
+  <li>编写一个<code>index.html</code>，存放在<code>/mnt/e/demosite</code>下：
+    <pre><code class="language-HTML"> &lt;div&gt;hello!&lt;/div&gt;
+</code></pre>
+  </li>
+  <li>
+    <p>打开浏览器，输入：<strong>http://localhost</strong>。</p>
+
+    <p>如果不成功，则看看是否是配置有问题。</p>
+  </li>
+</ol>
+
+<h3 id="2-测试php">2) 测试PHP</h3>
+<ol>
+  <li>编写一个<code>pi.php</code>，存放在<code>/mnt/e/demosite</code>下：
+    <pre><code class="language-PHP"> &lt;?php
+     phpinfo();
+ ?&gt;
+</code></pre>
+  </li>
+  <li>
+    <p>打开浏览器，输入：<strong>http://localhost/pi.php</strong>。</p>
+
+    <p>如果不成功，则看看是否是配置有问题。</p>
+
+    <blockquote>
+      <p>请注意观察信息中的 Loaded Configuration File 这个设置。设置值为PHP Fastcgi使用的 php.ini。你可能需要修改这个配置文件。</p>
+    </blockquote>
+
+    <blockquote>
+      <p>强烈建议测试成功后，删除这个pi.php。因为它会展示系统信息！</p>
+    </blockquote>
+  </li>
+</ol>
+
+<hr />
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/12/%E4%BD%BF%E7%94%A8make%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8.html" title="使用make构建应用">使用make构建应用</a><a class="next" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/21/%E4%BD%BF%E7%94%A8Grunt%E4%BD%BF%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96.html" title="使用grunt使应用构建自动化">使用grunt使应用构建自动化</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/21/%E4%BD%BF%E7%94%A8Grunt%E4%BD%BF%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96.html" title="使用grunt使应用构建自动化">使用grunt使应用构建自动化</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/06/VS-Code%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA.html" title="使用grunt使应用构建自动化">Vs code连接虚拟机</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="使用grunt使应用构建自动化">06 配置vs code</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="使用grunt使应用构建自动化">11 为vs code配置调试</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

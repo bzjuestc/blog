@@ -491,33 +491,277 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">关于c和c++的类型(4)</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-01-06T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Jan 06, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 6 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#C/C++">#C/C++</a><a class="post-tag" href="/blog/tags.html#类型">#类型</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <p>这里仅讨论<strong>数组</strong>和<strong>函数</strong>相关的复杂类型的简化。</p>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
+<h2 id="一用typedef简化复杂类型声明">一、用typedef简化复杂类型声明</h2>
+<p>嵌在对象定义中的隐式类型不容易认读，因此我们可以用<code>typedef</code>来简化类型声明。</p>
+
+<blockquote>
+  <p>typedef在定义类型而不是对象！</p>
+</blockquote>
+
+<h3 id="1-简化数组类型">1) 简化数组类型</h3>
+<pre><code class="language-C">typedef int arr_t[10];
+</code></pre>
+<p>解读步骤如下：</p>
+<ol>
+  <li>
+    <p>找到<code>typedef</code>中的新名字。</p>
+
+    <p>这里的新名字是<code>arr_t</code>。这是一种新的<strong>类型名</strong>。</p>
+  </li>
+  <li>
+    <p>找到<code>arr_t</code>附近的修饰符。</p>
+
+    <p><code>arr_t</code>左侧没有修饰符，右侧有<code>[]</code>。这样，<code>arr_t</code>就是一个<strong>数组类型</strong>。</p>
+  </li>
+  <li>
+    <p>去掉名字。</p>
+
+    <p>剩下的是：</p>
+    <div style="font-size: 1.2rem; font-weight: bold;">int [10]</div>
+
+    <p>这就是新类型<code>arr_t</code>的代表的已有类型。很明显，这是一种数组类型。</p>
+  </li>
+  <li>
+    <p>得出结论</p>
+
+    <p>综上，类型<code>arr_t</code>就是一个<strong>数组类型</strong>；这种类型的数组具有这样的特征：</p>
     <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
+      <li>是一维的</li>
+      <li>长度为10。</li>
+      <li>基类型为<code>int</code>。</li>
     </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+  </li>
+  <li>
+    <p>应用</p>
+    <pre><code class="language-C"> arr_t a; //等价于：int a[10];
+</code></pre>
+  </li>
+</ol>
 
+<h3 id="2-简化函数类型">2) 简化函数类型</h3>
+<pre><code class="language-C">typedef int fn_t(int);
+</code></pre>
+<p>解读步骤如下：</p>
+<ol>
+  <li>
+    <p>找到<code>typedef</code>中的新名字。</p>
+
+    <p>这里的新名字是<code>fn_t</code>。这是一种新的<strong>类型名</strong>。</p>
+  </li>
+  <li>
+    <p>找到<code>fn_t</code>附近的修饰符。</p>
+
+    <p><code>fn_t</code>左侧没有修饰符，右侧有<code>()</code>。这样，<code>fn_t</code>就是一个<strong>函数类型</strong>。</p>
+  </li>
+  <li>
+    <p>去掉名字。</p>
+
+    <p>剩下的是：</p>
+    <div style="font-size: 1.2rem; font-weight: bold;">int (int)</div>
+
+    <p>这就是函数类型<code>fn_t</code>的代表的已有类型。很明显，这是一种函数类型。</p>
+  </li>
+  <li>
+    <p>得出结论</p>
+
+    <p>综上，类型<code>fn_t</code>就是一个<strong>函数类型</strong>；这种类型的函数签名具有这样的特征：</p>
+    <ul>
+      <li>带有一个参数，这个参数的类型是<code>int</code>。</li>
+      <li>函数返回值类型为<code>int</code>。</li>
+    </ul>
+  </li>
+  <li>
+    <p>应用</p>
+
+    <p>C/C++规定，不能定义函数类型的对象。函数类型只能作为函数的参数类型。</p>
+    <pre><code class="language-C"> int f(int x, fn_t fn); //参数fn的类型是函数
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="3-简化函数指针类型">3) 简化函数指针类型</h3>
+<pre><code class="language-C">typedef int (*pf_t)(int);
+</code></pre>
+<p>解读步骤如下：</p>
+<ol>
+  <li>
+    <p>找到<code>typedef</code>中的新名字。</p>
+
+    <p>这里的新名字是<code>pf_t</code>。这是一种新的<strong>类型名</strong>。</p>
+  </li>
+  <li>
+    <p>找到<code>pf_t</code>附近的修饰符。</p>
+
+    <p><code>pf_t</code>左侧有修饰符<code>*</code>，并且和<code>pf_t</code>一起括在<code>()</code>中。这对<code>()</code>提升了<code>*</code>的优先级，因此<code>*</code>先和<code>pf_t</code>结合。这样，无论如何，<code>pf_t</code>就是一个<strong>指针类型</strong>。</p>
+  </li>
+  <li>去掉名字及其就近的修饰符。
+ 剩下的是：
+    <div style="font-size: 1.2rem; font-weight: bold;">int (int)</div>
+
+    <p>这就是指针类型<code>pf_t</code>的基类型。很明显，这是一种函数类型。</p>
+  </li>
+  <li>
+    <p>得出结论</p>
+
+    <p>综上，类型<code>pf_t</code>就是一个<strong>指向函数</strong>的<strong>指针类型</strong>；这种类型的指针指向的函数签名具有这样的特征：</p>
+    <ul>
+      <li>带有一个参数，这个参数的类型是<code>int</code>。</li>
+      <li>函数返回值类型为<code>int</code>。</li>
+    </ul>
+  </li>
+  <li>
+    <p>应用</p>
+
+    <p>可以定义函数指针类型的对象。</p>
+    <pre><code class="language-C"> int g(int x) {...}
+ pf_t pf;
+ pf = g;
+ pf(2); 
+</code></pre>
+    <p>函数指针类型也常作为函数的参数类型。</p>
+    <pre><code class="language-C"> int f(int x, pf_t fn); //参数fn的类型是函数指针类型，fn是指向函数的指针
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="4-函数类型参数和函数指针类型参数是等效的">4) 函数类型参数和函数指针类型参数是等效的</h3>
+<p>以下两个函数的签名是等效的：</p>
+<pre><code class="language-C">int f(int x, fn_t fn); //fn是函数
+int f(int x, pf_t fn); //fn是函数指针
+</code></pre>
+
+<h2 id="二c的using语句">二、C++的using语句</h2>
+<p>C++的<code>using</code>语句可以替代<code>typedef</code>语句，并且可读性更强。例如：</p>
+<pre><code class="language-C++">using arr_t = int [10];
+using fn_t = int (int);
+using pf_t = int (*)(int);
+</code></pre>
+
+<h2 id="三更复杂的案例">三、更复杂的案例</h2>
+<p>如果有定义：</p>
+<pre><code class="language-C++">int (*a(int))(int);
+</code></pre>
+<p>那么名字a是什么呢？</p>
+
+<p>解读步骤：</p>
+<ol>
+  <li>
+    <p>找到<code>a</code>附近的修饰符。</p>
+
+    <p>前后有<code>*</code>和<code>()</code>。由于<code>()</code>的优先级更高，因此<code>a</code>首先和<code>()</code>结合。因此，<code>a</code>一定是个函数。很明显，这个函数带有一个整型参数。</p>
+  </li>
+  <li>
+    <p>去掉<code>a(int)</code>，剩下的是<code>int (*)(int)</code>。</p>
+
+    <p>这是函数<code>a</code>的返回值类型。很明显，这是一种<strong>指向函数的指针类型</strong>。</p>
+  </li>
+  <li>
+    <p>总结</p>
+
+    <p>综上，函数<code>a</code>的特征是：</p>
+    <ul>
+      <li>带有一个整型参数</li>
+      <li>返回函数指针</li>
+    </ul>
+  </li>
+  <li>
+    <p>使用</p>
+
+    <pre><code class="language-C"> a(1)(2); //用参数1调用a()，返回函数指针；再调用函数指针指向的函数，参数为2
+</code></pre>
+  </li>
+  <li>
+    <p>简化</p>
+
+    <p>显然，函数<code>a</code>的类型非常复杂，不好认读。因此最好简化。</p>
+    <pre><code class="language-C"> typedef int (*pf_t)(int); //C
+ //using pf_t = int (*)(int); //C++
+ pf_t a(int);
+</code></pre>
+    <p>以下是完整的示例程序。</p>
+    <pre><code class="language-C"> #include &lt;stdio.h&gt;
+
+ int f(int x) {
+     printf("f: %d\n", x);
+ }
+
+ int (*a(int i))(int) {
+     printf("a: %d\n", i);
+     return f;
+ }
+
+ int main() {
+     a(1)(2);
+
+     return 0;
+ }
+</code></pre>
+    <p>结果是：</p>
+    <pre><code class="language-bash"> a: 1
+ f: 2
+</code></pre>
+  </li>
+</ol>
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(3).html" title="关于c和c++的类型(3)">关于c和c++的类型(3)</a><a class="next" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/12/%E4%BD%BF%E7%94%A8make%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8.html" title="使用make构建应用">使用make构建应用</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/09-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8MinGW%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83.html" title="使用make构建应用">09 在windows中使用mingw编译环境</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html" title="使用make构建应用">07 使用git管理代码</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="使用make构建应用">免密使用sudo</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html" title="使用make构建应用">关于c和c++的类型(1)</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 

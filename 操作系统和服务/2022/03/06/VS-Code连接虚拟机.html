@@ -491,33 +491,233 @@
 
 
 
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Vs code连接虚拟机</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-03-06T00:00:00+08:00" itemprop="datePublished"><i class="far fa-calendar"></i> Mar 06, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 6 mins</span>
+  </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#VSCode">#VSCode</a><a class="post-tag" href="/blog/tags.html#SSH">#SSH</a><a class="post-tag" href="/blog/tags.html#虚拟机">#虚拟机</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
     <div class="post-content e-content" itemprop="articleBody">
 
-      <h2>关于</h2>
+      <p>有同学在问如何通过<code>Windows</code>中的<code>VS Code</code>连接<code>VMware</code>虚拟机中的<code>Ubuntu</code>。要实现这点，要通过<strong>SSH</strong>连接。</p>
 
-<div>
-    <img class="laobai" src="/blog/assets/images/laobai.jpg" title="laobai" />
-    <p>
-    本站的博客文章是我在教学和开发过程的经验分享。内容涉及：
-    </p>
+<p>这里分享一下我的安装配置经验。如有谬误，敬请指正。</p>
+
+<h2 id="一ubuntu设置">一、Ubuntu设置</h2>
+
+<h3 id="一-设置固定ip地址">一) 设置固定IP地址</h3>
+
+<p>一般地，虚拟机中<code>Ubuntu</code>的<code>IP</code>地址是通过<code>DHCP</code>方式动态分配的，因此每次启动后地址可能不一样。为此，必须为虚拟机设置一个固定的IP地址。</p>
+
+<ol>
+  <li>
+    <p>点击<code>Ubuntu</code>桌面右上角的<strong>网络</strong>图标，在下拉菜单中选择<code>设置</code>或者<code>Settings</code>。</p>
+  </li>
+  <li>
+    <p>在弹出的窗口中，在左侧栏顶部选择<code>网络</code>或者<code>Network</code>。出现的窗口类似于：
+ <img src="/blog/assets/images/blog/ubuntu-network.png" width="80%" /></p>
+  </li>
+  <li>
+    <p>点击<strong>Wired</strong>项目中右侧的齿轮，进入设置页面：</p>
+
+    <p><img src="/blog/assets/images/blog/ubuntu-network-config.png" width="60%" /></p>
+
+    <p>请记住这个页面中的<strong>Default Route</strong>和<strong>DNS</strong>。</p>
+  </li>
+  <li>点击<strong>IPv4</strong>选项卡，在其中选择<strong>Manual</strong>，然后：
     <ul>
-        <li>编程环境：操作系统、编程工具、编译器、代码托管等等</li>
-        <li>程序设计：C/C++、PHP等等</li>
-        <li>其它内容：Web设计等等</li>
+      <li>在<strong>Addresses</strong>中输入你想要的IP地址、子网掩码和网关地址。这里的网关地址输入刚才记下来的<strong>Default Route</strong>的地址。</li>
+      <li>在<strong>DNS</strong>中，关闭<strong>Automatic</strong>，输入刚才记下来的<strong>DNS</strong>的地址。</li>
     </ul>
-    <p>
-    如果您对文章的观点有疑问，请联系我。谢谢！
-    </p>
-</div>
+
+    <p><img src="/blog/assets/images/blog/ubuntu-network-addresses.png" width="60%" /></p>
+  </li>
+  <li>点击右上角的<strong>Apply</strong>以生效。</li>
+  <li>在<code>Ubuntu</code>终端中，发出如下命令重启系统：
+    <pre><code class="language-bash"> reboot
+</code></pre>
+  </li>
+  <li>重启后，如果桌面右上角的<strong>网络</strong>图标上显示<code>?</code>，则说明网络不通。请检查前面的步骤是否操作正确。</li>
+</ol>
+
+<h3 id="二-启动ssh服务">二) 启动SSH服务</h3>
+
+<p>在终端中发出如下命令：</p>
+<pre><code class="language-bash">sudo service ssh start
+</code></pre>
+<p>如果提示命令不存在，则先安装它：</p>
+<pre><code class="language-bash">sudo apt install openssh-server
+</code></pre>
+<p>安装好后启动服务。</p>
+
+<h2 id="二-windows设置">二、 Windows设置</h2>
+
+<h3 id="一-为ssh连接做准备">一) 为SSH连接做准备</h3>
+
+<ol>
+  <li>
+    <p>生成<strong>ssh key</strong></p>
+
+    <p>打开<code>Powershell</code>，发出如下命令：</p>
+    <pre><code class="language-Powershell"> ssh -V
+</code></pre>
+    <p>如果显示出版本信息，说明你的<code>Windows</code>系统已经安装了<code>ssh</code>客户端。此时可以运行<code>ssh-keygen</code>命令。</p>
+
+    <p>如果没有，那么请用<strong>管理员身份</strong>启动<code>Powershell</code>，用如下命令安装：</p>
+    <pre><code class="language-Powershell"> Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+</code></pre>
+
+    <p>再发出如下命令：</p>
+    <pre><code class="language-Powershell"> cd ~/.ssh
+ ssh-keygen -t rsa -C "your-email"
+</code></pre>
+
+    <blockquote>
+      <p>your-email是你常用的邮箱地址。</p>
+    </blockquote>
+
+    <p>此命令会提示你，生成的<strong>ssh key</strong>存放到哪个文件中。可以直接回车，选择默认文件名<code>rsa_id</code>，或者输入你想要的文件名。例如，我输入了<code>ubuntu</code>。</p>
+
+    <blockquote>
+      <p>此后都以我的操作为例。</p>
+    </blockquote>
+
+    <p>此后的提问一路回车就可以了。</p>
+
+    <p>完成后，<code>~/.ssh</code>目录中会生成两个文件：</p>
+    <ul>
+      <li><code>ubuntu</code>：私钥文件</li>
+      <li><code>ubuntu.pub</code>：公钥文件</li>
+    </ul>
+  </li>
+  <li>
+    <p>创建<strong>config</strong>文件</p>
+
+    <p>打开<code>Code</code>，新建文件，在其中输入：</p>
+    <pre><code class="language-plaintext"> Host ubuntu
+     HostName 192.168.184.129
+     User bzj
+     IdentityFile ~/.ssh/ubuntu
+</code></pre>
+    <ul>
+      <li><code>Host</code>：任意你想要的名字</li>
+      <li><code>HostName</code>：刚为<code>Ubuntu</code>设置的固定IP</li>
+      <li><code>User</code>：你登录<code>Ubuntu</code>的账号</li>
+      <li><code>IdentityFile</code>：刚生成的<code>ssh key</code>的私钥文件名<code>ubuntu</code></li>
+    </ul>
+
+    <p>将文件保存到<code>~/.ssh</code>目录中，并命名为<code>config</code>。</p>
+  </li>
+  <li>
+    <p>复制公钥文件到<code>Ubuntu</code>以实现免密登录</p>
+
+    <ul>
+      <li>进入<code>Ubuntu</code>桌面，双击<code>Home</code>图标，点击菜单栏上的三条横线图标，勾选<strong>Show Hidden Files</strong>，此后你会在文件夹里看到<code>.ssh</code>目录。双击打开它。</li>
+      <li>
+        <p>在<code>Windows</code>中，打开<code>C:\用户\&lt;登录名&gt;\.ssh</code>文件夹，将<code>ubuntu.pub</code>文件复制粘贴到<code>Ubuntu</code>的<code>.ssh</code>目录中，并将其重命名为：<code>authorized_keys</code>。</p>
+
+        <blockquote>
+          <登录名>是你的Windows登录账号名。
+</登录名>
+        </blockquote>
+      </li>
+      <li>在<code>Ubuntu</code>终端中，发出如下命令：
+        <pre><code class="language-bash">  cd ~/.ssh
+  chmod 644 authorized_keys
+</code></pre>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="二-测试ssh连接">二) 测试SSH连接</h3>
+
+<p>在<code>Powershell</code>终端中，输入：</p>
+<pre><code class="language-Powersehll">ssh -T ubuntu
+</code></pre>
+
+<p>如果操作无误，那么就可以看到类似于如下信息：</p>
+<pre><code class="language-plaintext">Welcome to Ubuntu 21.10 (GNU/Linux 5.13.0-30-generic x86_64)
+
+//some information
+
+0 updates can be applied immediately.
+
+</code></pre>
+
+<p>此时，光标在闪动。这说明已经远程进入了<code>Ubunut</code>系统。试试如下命令：</p>
+<pre><code class="language-bash">ls -l
+</code></pre>
+<p>你应该会看到你的<code>Ubuntu</code>登录账号下的目录列表。
+输入：</p>
+<pre><code class="language-bash">exit
+</code></pre>
+<p>将退出连接。</p>
+
+<h2 id="三用code连接虚拟机中的ubuntu">三、用Code连接虚拟机中的Ubuntu</h2>
+
+<ol>
+  <li>打开<code>Code</code>，点击<strong>远程连接</strong>图标，在<strong>REMOTE EXPLOERER</strong>的列表中，选择<strong>SSH Targets</strong>。</li>
+  <li>此后，下方列表将会出现<code>config</code>文件中的配置项：<code>ubuntu</code>。</li>
+  <li>点击<code>ubuntu</code>，根据系统的提示连接上虚拟机中的某个目录。</li>
+</ol>
+
+<blockquote>
+  <p>你可能需要先在虚拟机中创建要连接的目录。</p>
+</blockquote>
+
+<hr />
 
 
 
     </div>
 
 </article>
-<div class="post-comments"></div></section>
+<div class="post-nav"><a class="previous" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/01/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BAVMware-Player.html" title="安装配置虚拟机vmware player">安装配置虚拟机vmware player</a><a class="next" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/11/%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AE%89%E8%A3%85Ubuntu-Server.html" title="在虚拟机中安装ubuntu server">在虚拟机中安装ubuntu server</a></div><div class="post-related">
+      <div>相关文章</div>
+      <ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="在虚拟机中安装ubuntu server">06 配置vs code</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/03-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8Linux.html" title="在虚拟机中安装ubuntu server">03 在windows中使用linux</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="在虚拟机中安装ubuntu server">免密使用sudo</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/02-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6.html" title="在虚拟机中安装ubuntu server">02 关于操作系统和工具软件</a></li></ul>
+    </div><div class="post-comments"></div></section>
 </div>
 
 
