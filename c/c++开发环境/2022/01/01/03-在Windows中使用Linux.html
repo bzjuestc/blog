@@ -533,7 +533,7 @@
 
 
 
-    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 9 mins</span>
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 8 mins</span>
   </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#WSL">#WSL</a><a class="post-tag" href="/blog/tags.html#Linux">#Linux</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -594,13 +594,13 @@
 <h3 id="一搜索ubuntu">一、搜索Ubuntu</h3>
 <p>在<strong>启用了WSL</strong>后，打开<strong>Windows Store</strong>，搜索<strong>Ubuntu</strong>，出现如下界面：</p>
 <div style="text-align:center;">
-<img src="/blog/assets/images/blog/windows-store.png" style="width:70%;" />
+<img src="/blog/assets/images/blog/windows-store.png" style="width:80%;" />
 </div>
 
 <h3 id="二安装ubuntu">二、安装Ubuntu</h3>
 
 <h4 id="1-安装ubuntu">1) 安装Ubuntu</h4>
-<p>建议选择顶部第一个的Ubuntu（目前版本是22.04）。选择“获取(get)”，其后的过程就是下载和安装。</p>
+<p>建议选择<code>Canonical Group Limited</code>发布的最新版Ubuntu（目前版本是24.04 LTS）。选择“获取(get)”，其后的过程就是下载和安装。</p>
 
 <p>Ubuntu安装完成后，你会看到Windows启动了一个“黑框框”，这个是Ubuntu的<strong>终端(terminal)</strong>，你和Ubuntu系统的交互都在这个终端中进行。</p>
 
@@ -614,53 +614,31 @@
 
 <h4 id="2-创建账户">2) 创建账户</h4>
 
-<p>Ubuntu在第一次运行时，需要你创建一个<strong>账户及其密码</strong>。</p>
+<p>安装过程中，系统会要求创建一个<strong>新账户及其密码</strong>。请按界面要求操作。</p>
 
-<ol>
-  <li>
-    <p>创建账户</p>
+<p>除了输入账户和密码外，其他操作全部使用默认即可。</p>
 
-    <p>当你看到终端中有如下信息（有省略）：</p>
-    <pre><code class="language-Plaintext"> Enter new UNIX username:
+<p>请一定选一个合适的名字，强烈建议用不长的<strong>全英文，中间没有空格、符号等特殊字符</strong>。注意，英文必须是<strong>小写字母</strong>。</p>
+
+<p><strong>关于创建密码</strong></p>
+
+<p>如果你选择的Ubuntu系统版本较低，那么在创建密码时需注意。当系统的输出信息是这样的：</p>
+<pre><code class="language-bash">Enter new UNIX password:
 </code></pre>
-    <p>此时，你需要在终端中输入一个账户名，以回车结束输入。
- 请选一个合适的名字，建议用不长的<strong>全英文，中间没有空格、符号等特殊字符</strong>。注意，英文必须是<strong>小写字母</strong>。</p>
+<p>此时，你需要输入与账户关联的密码。<strong>注意！在输入密码时，屏幕上没有回显，即：你在敲键盘时，光标停在原地不动，屏幕上没有显示出你的输入。这是系统的一种安全措施，千万不要认为没有输进去哦！请一定要记住你输入的密码</strong>。</p>
 
-    <blockquote>
-      <p>Ubuntu 22.04的初始界面与此不同，有操作更方便的输入框。</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>创建密码</p>
+<h3 id="三打开ubuntu">三、打开Ubuntu</h3>
 
-    <p>此后，系统的输出信息是这样的：</p>
-    <pre><code class="language-bash"> Enter new UNIX password:
-</code></pre>
-    <p>此时，你需要输入与账户关联的密码。</p>
+<p>一旦<code>Ubuntu</code>安装好，那么在你的Windows系统的开始菜单里，你就可以找到<code>Ubuntu</code>，点击它即可打开一个<code>Ubuntu</code>终端。</p>
 
-    <blockquote>
-      <p>注意！在输入密码时，屏幕上没有回显，即：你在敲键盘时，光标停在原地不动，屏幕上没有显示出你的输入。这是系统的一种安全措施，千万不要认为没有输进去哦！</p>
-    </blockquote>
-
-    <blockquote>
-      <p>如果是在输入框中输入，那么密码中的每一个字符是用*代替的。</p>
-    </blockquote>
-
-    <p>此后，系统要求再次输入密码以验证正确性。</p>
-
-    <p><strong>请一定要记住你输入的密码</strong>。</p>
-  </li>
-</ol>
-
-<p>当你看到终端中出现：</p>
-<pre><code class="language-Plaintext">Installation successful!
-</code></pre>
-<p>这就表明，你的安装成功了。</p>
-
-<p><strong>注意</strong> Ubuntu 22.04还会要求配置挂载(mount)选项，如下图所示。在这一页里，不需要额外配置，多按几次Tab键点亮Done，然后按回车就可以了。</p>
+<p>但我建议用更便捷的方式打开它。找到<code>Windows Terminal</code>并打开，界面类似于下图：</p>
 <div style="text-align:center;">
-<img src="/blog/assets/images/blog/mount-options.png" style="width:70%;" />
+<img src="/blog/assets/images/blog/windows-terminal.png" style="width:80%;" />
 </div>
+
+<p>也许你的默认界面不是<code>Ubuntu</code>，那么请点击<code>Windows Terminal</code>中<code>+</code>号旁的向下箭头，在下拉菜单中找到<code>Ubuntu</code>并点击即可。</p>
+
+<p><strong>注：你可以设置 Windows Terminal 的外观，让它看起来更加漂亮！</strong></p>
 
 <h4 id="3-关于账户">3) 关于账户</h4>
 
@@ -718,6 +696,8 @@
 </code></pre>
     <p>此命令的意思是：将注册的发行版备份到<code>D</code>盘根目录下的<code>ubuntu2204.tar</code>文件中。</p>
 
+    <p><strong>请将命令中发新版的名字替换成你自己的</strong></p>
+
     <blockquote>
       <p>注：这条命令还可以用于Ubuntu日常维护中的备份。</p>
     </blockquote>
@@ -773,7 +753,7 @@
 <div class="post-nav"><a class="previous" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/02-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6.html" title="02 关于操作系统和工具软件">02 关于操作系统和工具软件</a><a class="next" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/04-%E7%BB%B4%E6%8A%A4%E5%92%8C%E9%85%8D%E7%BD%AELinux.html" title="04 维护和配置linux">04 维护和配置linux</a></div><div class="post-related">
       <div>相关文章</div>
       <ul>
-        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/01-%E5%89%8D%E8%A8%80.html" title="04 维护和配置linux">01 前言</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/12/%E4%BD%BF%E7%94%A8make%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8.html" title="04 维护和配置linux">使用make构建应用</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(3).html" title="04 维护和配置linux">关于c和c++的类型(3)</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="04 维护和配置linux">免密使用sudo</a></li></ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="04 维护和配置linux">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="04 维护和配置linux">06 配置vs code</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/01/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BAVMware-Player.html" title="04 维护和配置linux">安装配置虚拟机vmware player</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="04 维护和配置linux">免密使用sudo</a></li></ul>
     </div><div class="post-comments"></div></section>
 </div>
 

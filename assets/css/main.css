@@ -688,6 +688,9 @@ html[data-scroll-status=down] .framework .sidebar {
 .post .post-related ul {
   margin-left: 1rem;
 }
+.post .post-related ul li {
+  padding: 0.3rem 0;
+}
 .post .post-related ul .post-link {
   font-size: 0.940625rem;
 }
