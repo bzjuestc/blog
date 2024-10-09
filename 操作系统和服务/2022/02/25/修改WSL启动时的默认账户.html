@@ -533,7 +533,7 @@
 
 
 
-    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 3 mins</span>
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 2 mins</span>
   </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#WSL">#WSL</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -600,38 +600,19 @@
 
 <ol>
   <li>
-    <p>将<code>WSL</code>的默认用户切换为<code>bzj</code></p>
-
-    <p>关闭<code>WSL</code>终端，打开<code>Powershell</code>，输入：</p>
-    <pre><code class="language-Powershell"> ubuntu2004 config --default-user bzj
-</code></pre>
-    <blockquote>
-      <p>如果你的Ubuntu是18.04，那么请用ubuntu1804替换ubuntu2004。以下同。</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>再次启动<code>WSL</code></p>
-
-    <p>此后会看到默认账户已经是<code>bzj</code>了。</p>
-  </li>
-</ol>
-
-<p>如果上述命令不能用，那么可以这么做：</p>
-<ul>
-  <li>
     <p>打开一个<code>Ubuntu</code>终端，在其中输入如下命令：</p>
 
-    <pre><code class="language-bash">  cd /etc
-  sudo vim wsl.conf
+    <pre><code class="language-bash"> cd /etc
+ sudo vim wsl.conf
 </code></pre>
   </li>
   <li>当<code>vim</code>编辑器启动后，按字母键<code>i</code>（此键意为插入insert），然后将如下内容输入：
-    <pre><code class="language-vim">  [user]
-  default=bzj
+    <pre><code class="language-vim"> [user]
+ default=bzj
 </code></pre>
   </li>
   <li>输入完成后，先按<code>ESC</code>键，再按冒号键<code>:</code>，屏幕的底部会出现<code>:</code>。在其后输入：<code>wq</code>，然后按回车。</li>
-</ul>
+</ol>
 
 <hr />
 
@@ -642,7 +623,7 @@
 <div class="post-nav"><a class="previous" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="免密使用sudo">免密使用sudo</a><a class="next" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/01/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BAVMware-Player.html" title="安装配置虚拟机vmware player">安装配置虚拟机vmware player</a></div><div class="post-related">
       <div>相关文章</div>
       <ul>
-        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="安装配置虚拟机vmware player">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/23/%E5%85%8D%E5%AF%86%E4%BD%BF%E7%94%A8sudo.html" title="安装配置虚拟机vmware player">免密使用sudo</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/25/%E4%BF%AE%E6%94%B9WSL%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%B4%A6%E6%88%B7.html" title="安装配置虚拟机vmware player">修改wsl启动时的默认账户</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="安装配置虚拟机vmware player">06 配置vs code</a></li></ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html" title="安装配置虚拟机vmware player">07 使用git管理代码</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/05-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7.html" title="安装配置虚拟机vmware player">05 编译环境和工具</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/02-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6.html" title="安装配置虚拟机vmware player">02 关于操作系统和工具软件</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/08-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" title="安装配置虚拟机vmware player">08 常见问题及解决方案</a></li></ul>
     </div><div class="post-comments"></div></section>
 </div>
 

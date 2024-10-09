@@ -533,7 +533,7 @@
 
 
 
-    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 11 mins</span>
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 12 mins</span>
   </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#gcc/g++">#gcc/g++</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -559,7 +559,7 @@
     <pre><code class="language-bash"> gcc -v
  g++ -v
 </code></pre>
-    <p>如果系统显示命令找不到，那么请直接跳到步骤2)。</p>
+    <p>如果系统显示命令找不到，那么请直接跳到步骤2。</p>
 
     <p>如果显示的主版本号低于<strong>13</strong>（例如是12），那么先卸载它：</p>
     <pre><code class="language-bash"> sudo apt remove gcc-12 g++-12 -y
@@ -644,7 +644,7 @@
 
 <h4 id="一使用c编译器">一）使用C编译器</h4>
 
-<p>打开VS Code，新建并编辑如下文件：</p>
+<p>打<code>VS Code</code>，按<code>CTRL+N</code>新建一个文件，在编辑窗口中输入内容：</p>
 <pre><code class="language-c">#include &lt;stdio.h&gt;
 
 int main() {
@@ -653,19 +653,29 @@ int main() {
 }
 </code></pre>
 
-<p>保存为（二者之一）：</p>
+<p>然后，按<code>CTRL+S</code>保存为（二者之一）：</p>
 <ul>
-  <li>WSL：<code>D:\f.c</code>。这个文件在WSL中的路径是：<code>/mnt/d/f.c</code>。</li>
-  <li>虚拟机或者macOS：<code>~/f.c</code>。</li>
-</ul>
+  <li>
+    <p>WSL</p>
 
-<blockquote>
-  <p>注：如果你没有D盘，那么就将其保存到C盘根目录下。</p>
-</blockquote>
+    <p>选择<code>D</code>盘，然后在文件名输入栏中输入<code>f.c</code>。</p>
+
+    <p>这个文件在Windows下的路径是：<code>D:\f.c</code>，在WSL中对应的路径是：<code>/mnt/d/f.c</code>。</p>
+
+    <blockquote>
+      <p>注：如果你没有D盘，那么就将其保存到C盘根目录下。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>虚拟机或者macOS</p>
+
+    <p>选择目录<code>~</code>，然后在文件名输入栏中输入<code>f.c</code>。这个文件路径是：<code>~/f.c</code>。</p>
+  </li>
+</ul>
 
 <h4 id="二使用c编译器">二）使用C++编译器</h4>
 
-<p>打开VS Code，新建并编辑如下文件：</p>
+<p>打开<code>VS Code</code>，新建并编辑如下文件：</p>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 
 int main() {
@@ -877,7 +887,7 @@ make
 <div class="post-nav"><a class="previous" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/04-%E7%BB%B4%E6%8A%A4%E5%92%8C%E9%85%8D%E7%BD%AELinux.html" title="04 维护和配置linux">04 维护和配置linux</a><a class="next" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="06 配置vs code">06 配置vs code</a></div><div class="post-related">
       <div>相关文章</div>
       <ul>
-        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="06 配置vs code">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="06 配置vs code">06 配置vs code</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/25/%E4%BF%AE%E6%94%B9WSL%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%B4%A6%E6%88%B7.html" title="06 配置vs code">修改wsl启动时的默认账户</a></li><li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(1).html" title="06 配置vs code">关于c和c++的类型(1)</a></li></ul>
+        <li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/06-%E9%85%8D%E7%BD%AEVS-Code.html" title="06 配置vs code">06 配置vs code</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="06 配置vs code">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/30/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL%E6%9C%8D%E5%8A%A1.html" title="06 配置vs code">在ubuntu中安装mysql服务</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/03/06/VS-Code%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA.html" title="06 配置vs code">Vs code连接虚拟机</a></li></ul>
     </div><div class="post-comments"></div></section>
 </div>
 

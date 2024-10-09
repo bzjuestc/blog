@@ -533,7 +533,7 @@
 
 
 
-    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 13 mins</span>
+    <span class="post-reading-time left-vsplit"><i class="far fa-clock"></i> About 14 mins</span>
   </p><div class="post-tags"><a class="post-tag" href="/blog/tags.html#gcc/g++">#gcc/g++</a><a class="post-tag" href="/blog/tags.html#gdb">#gdb</a><a class="post-tag" href="/blog/tags.html#lldb">#lldb</a></div></header>
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -545,15 +545,30 @@
 <p>以下两种调试器安装其中一个即可。</p>
 
 <ol>
-  <li>gdb
-    <pre><code class="language-bash"> sudo apt install gdb -y
+  <li>
+    <p>gdb</p>
+
+    <p>建议在<code>Linux</code>或者<code>Windows</code>下安装。</p>
+    <ul>
+      <li>Linux
+        <pre><code class="language-bash">  sudo apt install gdb -y
+</code></pre>
+      </li>
+      <li>
+        <p>Windows</p>
+
+        <p>此时你应该使用的是MinGW，那么它自带了gdb调试工具。这种情况下，你需要确保MinGW的bin目录列在了Windows的Path变量中，并且将mingw32-make.exe复制一份，并将复制品改名为make.exe。</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>LLDB</p>
+
+    <p>建议在<code>macOS</code>下安装。如果你的系统中有了<code>clang</code>，那么一般都已经安装了<code>lldb</code>。如果没有，请发出如下命令：</p>
+    <pre><code class="language-bash"> brew install lldb -y
 </code></pre>
 
-    <blockquote>
-      <p>如果你用的是MinGW，那么它自带了gdb调试工具。这种情况下，你需要确保MinGW的bin目录列在了Windows的Path变量中。</p>
-    </blockquote>
-  </li>
-  <li>LLDB
+    <p><code>lldb</code>也可以在<code>Linux</code>使用。你可以这样来安装：</p>
     <pre><code class="language-bash"> sudo apt install lldb -y
 </code></pre>
   </li>
@@ -569,7 +584,7 @@
   </li>
   <li>CodeLLDB
     <ul>
-      <li>此插件支持的调试器是<code>LLDB</code>，<code>Linux</code>下可用。</li>
+      <li>此插件支持的调试器是<code>LLDB</code>，<code>Linux</code>和<code>macOS</code>下可用。</li>
     </ul>
   </li>
 </ol>
@@ -590,7 +605,7 @@
   <li>
     <p>安装插件</p>
 
-    <p>在<code>Code</code>中，点击左侧的插件按钮，然后点击靠近顶部的<code>...</code>，在下拉菜单中选择<strong>从VSIX安装/install from VSIX</strong>，在出现的输入框中输入存放插件的位置，例如<code>/mnt/d</code>，选择列出的插件就开始安装了。</p>
+    <p>在<code>VS Code</code>中，点击左侧的插件按钮，然后点击靠近顶部的<code>...</code>，在下拉菜单中选择<strong>从VSIX安装/install from VSIX</strong>，在出现的输入框中输入存放插件的位置，例如<code>/mnt/d</code>，选择列出的插件就开始安装了。</p>
   </li>
 </ol>
 
@@ -621,7 +636,7 @@
                  "-Wall",
                  "${file}",
                  "-o",
-                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                 "${fileDirname}/${fileBasenameNoExtension}.exe"
              ],
              "options": {
                  "cwd": "${fileDirname}"
@@ -689,7 +704,7 @@
 <p>一旦任务配置好，那么就可以在菜单<strong>终端</strong>-&gt;<strong>运行任务</strong>中，选择配置好的任务之一执行。</p>
 
 <h3 id="二配置调试器">二、配置调试器</h3>
-<p>无论是<code>gdb</code>还是<code>LLDB</code>，它们在<code>Code</code>的配置几乎是一样的。</p>
+<p>无论是<code>gdb</code>还是<code>LLDB</code>，它们在<code>VS Code</code>的配置几乎是一样的。</p>
 
 <ol>
   <li>
@@ -701,7 +716,7 @@
       <p>原则上，应该为每一个项目配置调试信息。</p>
     </blockquote>
   </li>
-  <li>点击<code>Code</code>界面左侧的调试按钮。这个按钮长这样：
+  <li>点击<code>VS Code</code>界面左侧的调试按钮。这个按钮长这样：
     <div style="text-align:left;">
  <img src="/blog/assets/images/blog/debug-button.png" style="width:2rem;" />
  </div>
@@ -713,7 +728,7 @@
     <p>其中，<code>launch.json</code>是一个链接。</p>
   </li>
   <li>
-    <p>点击这个链接，<code>Code</code>就会弹出一个选择框：</p>
+    <p>点击这个链接，<code>VS Code</code>就会弹出一个选择框：</p>
 
     <div style="text-align:center;">
  <img src="/blog/assets/images/blog/select-debugger.png" style="height:6rem;" />
@@ -721,7 +736,7 @@
 
     <p>在此选项中选择<code>C++(GDB/LLDB)</code>。</p>
 
-    <p>此后，<code>Code</code>会在你的<strong>当前项目目录</strong>下新建一个名为<code>.vscode</code>的子目录，并在其中新建一个名为<code>launch.json</code>的配置文件。同时这个文件会在<code>Code</code>右侧的编辑框中打开，其初始内容如下：</p>
+    <p>此后，<code>VS Code</code>会在你的<strong>当前项目目录</strong>下新建一个名为<code>.vscode</code>的子目录，并在其中新建一个名为<code>launch.json</code>的配置文件。同时这个文件会在<code>VS Code</code>右侧的编辑框中打开，其初始内容如下：</p>
 
     <pre><code class="language-json"> {
      // 一些注释
@@ -771,7 +786,7 @@
     <p>注意事项：</p>
     <ul>
       <li><code>preLaunchTask</code>键值指定了在调试前需要预先执行的任务。这个任务一般是在<code>tasks.json</code>中配置好的任务（名）之一。例如，这里<code>GDB</code>配置下给出的任务是<code>gcc build</code>。</li>
-      <li><code>program</code>键值下的可执行代码名必须与<code>tasks.json</code>里<code>-o</code>选项后的配置一样。例如，如果选择了<code>preLaunchTask</code>是<code>MinGW build</code>，则可执行代码名后要加上<code>.exe</code>后缀。</li>
+      <li><code>program</code>键值下的可执行代码名必须与<code>tasks.json</code>里<code>-o</code>选项后的配置一样。</li>
     </ul>
   </li>
 </ol>
@@ -840,7 +855,7 @@
 <div class="post-nav"><a class="previous" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/10-%E5%9C%A8macOS%E4%B8%AD%E4%BD%BF%E7%94%A8gcc%E5%92%8Cg++.html" title="10 在macos中使用gcc和g++">10 在macos中使用gcc和g++</a><span></span></div><div class="post-related">
       <div>相关文章</div>
       <ul>
-        <li><a class="post-link" href="/blog/web%E5%BA%94%E7%94%A8/2022/01/21/%E4%BD%BF%E7%94%A8Grunt%E4%BD%BF%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96.html" title="">使用grunt使应用构建自动化</a></li><li><a class="post-link" href="/blog/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%9C%8D%E5%8A%A1/2022/02/25/%E4%BF%AE%E6%94%B9WSL%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%B4%A6%E6%88%B7.html" title="">修改wsl启动时的默认账户</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2023/03/10/11-%E4%B8%BAVS-Code%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95.html" title="">11 为vs code配置调试</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/07-%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html" title="">07 使用git管理代码</a></li></ul>
+        <li><a class="post-link" href="/blog/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/2022/01/06/%E5%85%B3%E4%BA%8EC%E5%92%8CC++%E7%9A%84%E7%B1%BB%E5%9E%8B(4).html" title="">关于c和c++的类型(4)</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/01-%E5%89%8D%E8%A8%80.html" title="">01 前言</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/09/01/09-%E5%9C%A8Windows%E4%B8%AD%E4%BD%BF%E7%94%A8MinGW%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83.html" title="">09 在windows中使用mingw编译环境</a></li><li><a class="post-link" href="/blog/c/c++%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/2022/01/01/02-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6.html" title="">02 关于操作系统和工具软件</a></li></ul>
     </div><div class="post-comments"></div></section>
 </div>
 
