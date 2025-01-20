@@ -1,0 +1,70 @@
+title: 老白的教学博客
+subheading: 教学和研发过程中的经验分享
+description: 教学和研发过程中的经验分享
+author:
+  name: 白忠建
+  employer: 电子科技大学信息与软件工程学院
+  email: baizj@uestc.edu.cn
+  copyleft: (cleft)
+
+baseurl: "/blog/"
+url: ""
+
+image_urls:
+  favicon: "/favicon.ico"
+  author: "/assets/images/laobai.jpg"
+  brand: "/assets/images/bzlog.png"
+
+res_urls:
+  font: "/assets/webfonts"
+  feed: "/feed.xml"
+
+footer_info:
+  poweredby:
+    - "Jekyll"
+    - "Jekyll is a simple, blog-aware, static site generator"
+    - "http://jekyllrb.com/"
+  courtesy:
+    - [
+        "Yat Theme",
+        "Yat, yet another theme",
+        "https://github.com/jeffreytse/jekyll-theme-yat",
+      ]
+    - [
+        "Font Awesome",
+        "The web's most popular icon set and toolkit",
+        "https://fontawesome.com",
+      ]
+    - [
+        "highlight.js",
+        "Syntax highlighting for the Web",
+        "https://highlightjs.org/",
+      ]
+
+yat:
+  date_format: "%b %d, %Y"
+
+lang: zh-CN
+
+header_pages:
+  - index.html
+  - categories.html
+  - tags.html
+  - about.html
+
+header_page_icons:
+  首页: home
+  分类: list
+  标签: tags
+  关于: comment
+
+content_width: 70vw
+
+excerpt_size: 240
+
+plugins: ["jekyll-paginate"]
+paginate: 6
+
+code_badge:
+  enabled: true
+  text_transform: capitalize
