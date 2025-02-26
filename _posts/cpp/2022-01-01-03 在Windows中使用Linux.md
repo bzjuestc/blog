@@ -20,16 +20,19 @@ tags: [WSL, Linux]
 >仅将原有账户改名不能达到目的。所以，你可能需要创建一个新的账户。
 
 ### 二、 启用WSL
+
+**注意：如果你的电脑上安装有模拟器，或者雷电之类的游戏，那么这可能会导致WSL无法启动。建议卸载模拟器后再启用WSL。**
+
 1. 打开 **控制面板**，选择 **程序和功能**，选择 **启用和关闭Windows功能**，勾选图中红框内的两项：
     <div style="text-align:center;">
     <img src="{{ "/assets/images/blog/enable-wsl.png" | relative_url }}" style="width:40%;">
     </div>
+
+    **如果你没有找到“虚拟机平台”，那么请翻看窗口中有无“Virual Machine Platform”这个选项，找到后勾选它！**
     
 2. 重新启动Windows。
 
 #### 3) 升级WSL到WSL2
-如果你的`Windows`版本低于**11**，那么你可能要将`WSL`升级到`WSL2`。具体做法如下。
-
 下载`wsl_update_x64.msi`，然后用鼠标双击这个文件进行安装。
 
 >注意：如果安装此文件出现了错误不能安装，那么请忽略这个错误并且不再重试，而是跳过这步，继续后面Part 2中的步骤。
@@ -54,7 +57,7 @@ wsl --set-default-version 2
 ### 二、安装Ubuntu 
 
 #### 1) 安装Ubuntu
-建议选择`Canonical Group Limited`发布的最新版Ubuntu（目前版本是24.04 LTS）。选择“获取(get)”，其后的过程就是下载和安装。
+建议选择`Canonical Group Limited`发布的最新版Ubuntu。选择“获取(get)”，其后的过程就是下载和安装。
 
 Ubuntu安装完成后，你会看到Windows启动了一个“黑框框”，这个是Ubuntu的**终端(terminal)**，你和Ubuntu系统的交互都在这个终端中进行。
 
