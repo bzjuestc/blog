@@ -116,15 +116,7 @@ sudo cp /mnt/e/sources.list /etc/apt
 
 >请谨慎操作，否则可能破坏你的Ubuntu。
 
-1. 查看Ubuntu的当前用户
-
-    打开Ubuntu终端，命令提示符的形式类似于：
-    ```bash
-    bzj@xxx …
-    ```
-    其中，**bzj**就是当前用户。记住这个名字。注意：这是我的账户名，你的肯定和我的不一样。
-
-2. 查看在WSL中注册的Ubuntu的发行版
+1. 查看在WSL中注册的Ubuntu的发行版
 
     以管理员身份运行`Powershell`，发出如下命令：
     ```powershell
@@ -138,7 +130,9 @@ sudo cp /mnt/e/sources.list /etc/apt
     ```
     那么系统里安装的Ubuntu发行版就是：**Ubuntu 22.04**。
 
-3. 备份Ubuntu
+    **注意：你的发行版可能和示例中的不一样，请在后文中使用你自己的！**
+
+2. 备份Ubuntu
 
     在`Powershell`中发出如下命令：
     ```powershell
@@ -150,14 +144,14 @@ sudo cp /mnt/e/sources.list /etc/apt
 
     >注：这条命令还可以用于Ubuntu日常维护中的备份。
 
-4. 注销当前发行版
+3. 注销当前发行版
 
     在`Powershell`中发出如下命令：
     ```powershell
     wsl --unregister Ubuntu22.04
     ```
 
-5. 新建目录
+4. 新建目录
 
     在`Powershell`中发出如下命令：
     ```powershell
@@ -166,7 +160,7 @@ sudo cp /mnt/e/sources.list /etc/apt
     ```
     以上两条命令的功能是：在`D:`盘上创建一个名为`Ubuntu`的子目录（文件夹）。迁移后的`WSL`系统就存放在这个目录中。
 
-6. 导入Ubuntu备份
+5. 导入Ubuntu备份
 
     在`Powershell`中发出如下命令：
     ```powershell
@@ -176,15 +170,10 @@ sudo cp /mnt/e/sources.list /etc/apt
 
     >注：这条命令可以用于恢复以前备份的Ubuntu。
 
-7. 设置用户为以前的用户（否则就默认为root）
-
-    在`Powershell`中发出如下命令：
-    ```powershell
-    ubuntu2204 config --default-user bzj
-    ```
-
-8. 启动Ubuntu
+6. 启动Ubuntu
 
     如果操作无误，那么Ubuntu会正确启动，并且你原来的设置等全部都会保留。
+
+    如果此时发现Ubuntu的默认账号不是你原来的那个，那么请阅读04开头的博文：part 3 配置WSL。
 
 ---
