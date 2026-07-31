@@ -32,19 +32,6 @@ tags: [WSL, Linux]
     
 2. 重新启动Windows。
 
-#### 3) 升级WSL到WSL2
-下载`wsl_update_x64.msi`，然后用鼠标双击这个文件进行安装。
-
->注意：如果安装此文件出现了错误不能安装，那么请忽略这个错误并且不再重试，而是跳过这步，继续后面Part 2中的步骤。
-
-安装好后，**用管理员身份运行**`Powershell`，在窗口中输入如下命令：
-
-```powershell
-wsl --set-default-version 2
-```
-
->请注意命令行中，各参数之间有空格。另外，请注意大小写。
-
 
 ## Part 2、在WSL中安装Ubuntu
 
